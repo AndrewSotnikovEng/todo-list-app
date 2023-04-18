@@ -8,38 +8,39 @@ import { MdTableRestaurant } from 'react-icons/md';
 import { RiArchiveDrawerFill } from 'react-icons/ri';
 
 function Panel(props) {
-
-  var currentState = "active"
   
   const toggleButtonView =  () => {
     if (currentState == "backlog")
     {
-      currentState = "active"
+      setCurrentState("active")
       setCurrentButton(activeButton)
+      console.log("State was changed to ative");
     } 
     else if (currentState == "active")
     {
-      currentState = "backlog"
+      setCurrentState("backlog")
       setCurrentButton(backlogButton) 
+      console.log("State was changed to backlog");
     }    
+    console.log("Current state: " + currentState);
   }
 
   const activeButton = 
   (
     <Button onClick={ toggleButtonView } leftIcon={<MdTableRestaurant />} colorScheme='teal' variant='outline'>
-      Стол
+      Active
     </Button>
   )
 
   const backlogButton = 
   (
     <Button onClick={ toggleButtonView }  leftIcon={<RiArchiveDrawerFill />} colorScheme='teal' variant='outline'>
-      Ящик
+      Backlog
     </Button>
   )
 
   const [currentButton, setCurrentButton ] = useState(activeButton);
-  // const [currentState, setCurrentState ] = useState("active");
+  const [currentState, setCurrentState ] = useState("active");
   
     return (
       <div>
