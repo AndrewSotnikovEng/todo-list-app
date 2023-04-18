@@ -1,0 +1,33 @@
+.block-div {
+ width: 300px;
+ height: 200px;
+ margin: 20px;
+ padding: 10px;
+}
+
+.state-buttons-block
+{
+    float: right;
+}
+
+.state-button
+{
+    align-items: center;
+    align-content: center;
+    float: left;
+    width: 30px;
+    margin: auto 5px;
+    border-style: solid;
+    border-width: thin;
+}
+
+
+.high-priority
+{
+    background-color: pink;
+}
+
+.low-priority
+{
+    background-color: greenyellow;
+}

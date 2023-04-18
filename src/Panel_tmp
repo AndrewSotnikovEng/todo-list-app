@@ -1,0 +1,40 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+ 
+// function Panel2() {
+//     const [btn, setBtn] = React.useState(true)
+//     const action = React.useCallback(_ => {
+//         setBtn(old => !old)
+//     })
+//     return (
+//         <>
+//             {btn 
+//                 ? <Btn1 action={action} /> 
+//                 : <Btn2 action={action} />
+//             }
+//         </>
+//     )
+
+
+//     function Btn1({action}) {
+//         return (
+//             <button onClick={action}>
+//                 Active
+//             </button>
+//         )
+//     }
+//     function Btn2({action}) {
+//         return (
+//             <button onClick={action}>
+//                 Backlog
+//             </button>
+//         )
+//     }
+// }
+
+
+ 
+// // const root = ReactDOM.createRoot(document.getElementById('root'));
+// // root.render(<App />);
+
+// export Panel2

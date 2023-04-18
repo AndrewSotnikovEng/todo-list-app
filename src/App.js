@@ -1,24 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import TaskItem from './TaskItem';
+import Panel from "./Panel"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  <div>
+    <div>
+        {/* <Panel name="I am a panel"/> */}
+        <Panel/>
+        <TaskItem id="1" name="First Task" priority="High"/>
+        <TaskItem id="2" name="Second Task" priority="Low"/>
     </div>
+</div>
+
   );
 }
 
