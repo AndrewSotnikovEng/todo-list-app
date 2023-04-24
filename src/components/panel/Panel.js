@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import "./TaskItem.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-icons/fa";
 import { Stack } from '@chakra-ui/react'
-import CustomButton from "./Button";
-
+import CustomButton from "../buttons/Button";
 
 function Panel(props) {
   

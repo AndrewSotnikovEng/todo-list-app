@@ -1,5 +1,4 @@
 import React, {  } from "react";
-import "./TaskItem.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button  } from "@chakra-ui/button"
 import "react-icons/fa";
