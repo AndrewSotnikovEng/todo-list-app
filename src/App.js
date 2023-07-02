@@ -6,38 +6,90 @@ import React, { useState, useEffect } from "react";
 import TaskDetails from "./components/task-details/TaskDetails";
 
 function App() {
+
+
+  const tasksObj = [
+    { id: 1, name: "First Task", description: "First task desc", priority: "High" },
+    { id: 2, name: "Second Task", description: "Second task desc", priority: "Low" },
+    { id: 3, name: "Third Task", description: "Third task desc", priority: "Low" },
+  ];
+
   const [tableState, setTableState] = useState("initial");
   const [show, setShow] = useState(false);
-  const [taskDetailsTitle, setTaskDetailsTitle] = useState("Initial task");
+  const [taskDetailsId, setTaskDetailsId] = useState(0); 
+  const [taskDetailsName, setTaskDetailsName] = useState("Initial task");
+  const [taskDetailsPriority, setTaskDetailsPriority] = useState("Low");
+  const [taskDetailsDescription, setTaskDetailsDescription] = useState("");
+  const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
+  const [tasks, setTasks] = useState(tasksObj)
 
-  var tasks = [
-    { id: 1, name: "First Task", desc: "First task desc", priority: "High" },
-    { id: 2, name: "Second Task", desc: "Second task desc", priority: "Low" },
-    { id: 3, name: "Third Task", desc: "Third task desc", priority: "Low" },
-  ];
+  function resetDetailWindow() {
+    console.log("New taskDetailsId: " + taskDetailsId);
+    setTaskDetailsName("...Please type here your title...")
+    setTaskDetailsPriority("Low")
+    setTaskDetailsDescription("")
+  }
 
   return (
     <div>
       <div>
-        <Panel changeTableState={(state) => setTableState(state)} />
-        {tasks.map(({ id, name, desc, priority }) => {
+        <Panel 
+        changeTableState={ (state) => setTableState(state) } 
+        taskDetailsVisibilityHandler={setShow}
+        taskDetailsModeHandler={setTaskDetailsMode}
+        />
+        {tasks.map(({ id, name, priority, description }) => {
           return (
             <TaskItem
-              handler={setShow}
+              taskDetailsVisibilityHandler={setShow}
               isShown={show}
-              currentTitle={(title) => setTaskDetailsTitle(title)}
+              taskDetailsMode={setTaskDetailsMode}
+              taskDetailsIdHandler = {setTaskDetailsId}
+              taskDetailsNameHandler={setTaskDetailsName}
+              taskDetailsPriorityHandler={setTaskDetailsPriority}
+              taskDetailsDescriptionHandler={setTaskDetailsDescription}
               id={id}
               name={name}
               priority={priority}
+              description={description}
+
             />
           );
         })}
         <p style={{ margin: 20 }}>Current state is: {tableState}</p>
         <TaskDetails
           show={show}
-          handler={setShow}
-          taskHeader={taskDetailsTitle}
-          taskHeaderHandler={(title) => setTaskDetailsTitle(title)}
+          taskDetailsVisibilityHandler={setShow}
+          taskId={taskDetailsId}
+          taskHeader={taskDetailsName}
+          taskPriority={taskDetailsPriority}
+          taskDescription={taskDetailsDescription}
+
+          taskDetailsNameHandler={setTaskDetailsName}
+          taskDetailsPriorityHandler={setTaskDetailsPriority}
+          taskDetailsDescriptionHandler={setTaskDetailsDescription}
+          taskDetailsOnChangeNotifier={() =>  {
+            // setTaskDetailsName(newTitle)
+            if (taskDetailsMode == "Editing") {
+              const modifiedTasks = tasks.map( ( li ) =>
+              {
+                if(li.id == taskDetailsId) {
+                  li.name = taskDetailsName
+                  li.priority = taskDetailsPriority
+                  li.description = taskDetailsDescription
+                } 
+              }
+              )
+              resetDetailWindow();
+            } else if (taskDetailsMode == "Adding") {
+                const newId = tasks[tasks.length - 1].id + 1
+                setTaskDetailsId(newId)
+                var modfiedTasks = tasks;
+                modfiedTasks.push(  { id: newId, name: taskDetailsName, description: taskDetailsDescription, priority: taskDetailsPriority } );
+                resetDetailWindow();
+            }
+          }
+          }
         />
       </div>
     </div>

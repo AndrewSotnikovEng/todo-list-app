@@ -3,14 +3,9 @@ import styles from "./TaskDetails.css";
 import { Input, Textarea, Select, Stack } from '@chakra-ui/react'
 
 const TaskDetails = props => {
-  console.log(props.show, props.taskHeader);
+  console.log(props.show, props.taskHeader, props.taskPriority);
   if(!props.show) {
     return null
-  }
-
-  function handleChange(event) {
-    // console.log(event);
-    props.taskHeaderHandler(event)
   }
 
   return (
@@ -20,17 +15,23 @@ const TaskDetails = props => {
           {/* <h4 className="modal-title"> {props.taskHeader} </h4> */}
         </div>
         <div className="modal-body">
-          <Input onChange={e => handleChange(e.target.value)} size='sm' value={ props.taskHeader}  borderWidth={1} borderColor="black"/>
-          <Select size='sm' placeholder='Choose priority' borderWidth={1} borderColor="black" mt={2}>
-            <option value='Low' selected="true">Low</option>
+          <Input onChange={e => props.taskDetailsNameHandler(e.target.value)} size='sm' value={ props.taskHeader}  borderWidth={1} borderColor="black"/>
+          <Select onChange={e => props.taskDetailsPriorityHandler(e.target.value)} size='sm' placeholder='Choose priority' borderWidth={1} borderColor="black" mt={2} value={props.taskPriority}>
+            <option value='Low'>Low</option>
             <option value='High'>High</option>
           </Select>
-          <Textarea size='sm' height={40} value={props.taskDescription} mt={2} borderWidth={1} borderColor="black"/>
+          <Textarea onChange={e => props.taskDetailsDescriptionHandler(e.target.value)} size='sm' height={40} value={props.taskDescription} mt={2} borderWidth={1} borderColor="black"/>
 
         </div>
         <div className="modal-footer">
           {/* <Input placeholder='small size' size='sm' value={props.taskHeader} /> */}
-          <button className="button" onClick={ () => props.handler(false) }>Close </button>
+          <button className="button" onClick={ () =>
+            { props.taskDetailsVisibilityHandler(false); 
+              props.taskDetailsOnChangeNotifier()
+            }
+          }>
+              Close 
+          </button>
         </div>
       </div>
     </div>

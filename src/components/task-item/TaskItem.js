@@ -28,9 +28,13 @@ function TaskItem(props) {
             borderColor='aqua'
             backgroundColor={ backgroundColor }
             onClick={ () => {
-                props.handler(true); 
-                console.log("Clicked at: " +  props.name );
-                props.currentTitle( props.name )
+                props.taskDetailsVisibilityHandler(true);
+                props.taskDetailsMode("Editing")
+                console.log("Clicked at: " +  props.name + " id: " + props.id);
+                props.taskDetailsIdHandler(props.id);
+                props.taskDetailsNameHandler( props.name )
+                props.taskDetailsPriorityHandler( props.priority )
+                props.taskDetailsDescriptionHandler( props.description )
              } 
             }
             >
