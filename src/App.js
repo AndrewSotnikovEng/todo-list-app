@@ -11,7 +11,7 @@ function App() {
   const tasksObj = [
     { id: 1, name: "First Task", description: "First task desc", priority: "High" },
     { id: 2, name: "Second Task", description: "Second task desc", priority: "Low" },
-    { id: 3, name: "Third Task", description: "Third task desc", priority: "Low" },
+    { id: 1689, name: "Third Task", description: "Third task desc", priority: "Low" },
   ];
 
   const [tableState, setTableState] = useState("initial");
@@ -30,13 +30,18 @@ function App() {
     setTaskDetailsDescription("")
   }
 
+  function removeTaskHandler(id) {
+    const modifiedTasks = tasks.filter(li => li.id !== id)
+    setTasks(modifiedTasks)
+  }
+
   return (
     <div>
       <div>
-        <Panel 
-        changeTableState={ (state) => setTableState(state) } 
-        taskDetailsVisibilityHandler={setShow}
-        taskDetailsModeHandler={setTaskDetailsMode}
+        <Panel
+          changeTableState={(state) => setTableState(state)}
+          taskDetailsVisibilityHandler={setShow}
+          taskDetailsModeHandler={setTaskDetailsMode}
         />
         {tasks.map(({ id, name, priority, description }) => {
           return (
@@ -44,7 +49,7 @@ function App() {
               taskDetailsVisibilityHandler={setShow}
               isShown={show}
               taskDetailsMode={setTaskDetailsMode}
-              taskDetailsIdHandler = {setTaskDetailsId}
+              taskDetailsIdHandler={setTaskDetailsId}
               taskDetailsNameHandler={setTaskDetailsName}
               taskDetailsPriorityHandler={setTaskDetailsPriority}
               taskDetailsDescriptionHandler={setTaskDetailsDescription}
@@ -52,7 +57,7 @@ function App() {
               name={name}
               priority={priority}
               description={description}
-
+              removeTaskHandler={removeTaskHandler}
             />
           );
         })}
@@ -64,32 +69,33 @@ function App() {
           taskHeader={taskDetailsName}
           taskPriority={taskDetailsPriority}
           taskDescription={taskDetailsDescription}
-
           taskDetailsNameHandler={setTaskDetailsName}
           taskDetailsPriorityHandler={setTaskDetailsPriority}
           taskDetailsDescriptionHandler={setTaskDetailsDescription}
-          taskDetailsOnChangeNotifier={() =>  {
+          taskDetailsOnChangeNotifier={() => {
             // setTaskDetailsName(newTitle)
             if (taskDetailsMode == "Editing") {
-              const modifiedTasks = tasks.map( ( li ) =>
-              {
-                if(li.id == taskDetailsId) {
-                  li.name = taskDetailsName
-                  li.priority = taskDetailsPriority
-                  li.description = taskDetailsDescription
-                } 
-              }
-              )
+              const modifiedTasks = tasks.map((li) => {
+                if (li.id == taskDetailsId) {
+                  li.name = taskDetailsName;
+                  li.priority = taskDetailsPriority;
+                  li.description = taskDetailsDescription;
+                }
+              });
               resetDetailWindow();
-            } else if (taskDetailsMode == "Adding") {
-                const newId = tasks[tasks.length - 1].id + 1
-                setTaskDetailsId(newId)
-                var modfiedTasks = tasks;
-                modfiedTasks.push(  { id: newId, name: taskDetailsName, description: taskDetailsDescription, priority: taskDetailsPriority } );
-                resetDetailWindow();
+            } else if (taskDetailsMode == "Adding") {              
+              const newId = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1;
+              setTaskDetailsId(newId);
+              var modfiedTasks = tasks;
+              modfiedTasks.push({
+                id: newId,
+                name: taskDetailsName,
+                description: taskDetailsDescription,
+                priority: taskDetailsPriority,
+              });
+              resetDetailWindow();
             }
-          }
-          }
+          }}
         />
       </div>
     </div>
