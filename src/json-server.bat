@@ -1,0 +1,1 @@
+npx json-server --watch -p 2000 src/db.json
