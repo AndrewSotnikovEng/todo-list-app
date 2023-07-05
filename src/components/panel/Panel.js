@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-icons/fa";
 import { Stack } from '@chakra-ui/react'
-import CustomButton from "../buttons/Button";
+import ToggleStateButton from "../buttons/ToggleStateButton";
 import AddButton from "../buttons/AddButton";
 
 function Panel(props) {
@@ -29,7 +29,7 @@ function Panel(props) {
         <Stack direction='row' 
         spacing={4}
         m="30px">
-          <CustomButton buttonName={ currentState } toggleButtonView={ () =>  toggleButtonView() }/> 
+          <ToggleStateButton buttonName={ currentState } toggleButtonView={ () =>  toggleButtonView() }/> 
           <AddButton 
             taskDetailsVisibilityHandler={ props.taskDetailsVisibilityHandler }
             taskDetailsModeHandler= { props.taskDetailsModeHandler }
