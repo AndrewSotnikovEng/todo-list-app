@@ -1,6 +1,6 @@
 import React from "react";
-// import styles from "./TaskDetails.css";
-import { Input, Select, Stack, Button, Flex } from '@chakra-ui/react'
+import { Input, Select, Button, Flex } from '@chakra-ui/react'
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 const TaskTemplate = props => {
   if(!props.show) {
@@ -32,9 +32,16 @@ const TaskTemplate = props => {
               <option value="task1">Task template 1</option>
               <option value="task2">Task template 2</option>
             </Select>
-            <Button size="sm" ml={2} mt={2} borderWidth={1} borderColor={"black"}>
-              +
-            </Button>
+            <Button
+              leftIcon={<AiFillPlusCircle />}
+              size="sm"
+              ml={3}
+              mt={2}
+              pl={3}
+              pr={1}
+              borderWidth={1}
+              borderColor={"black"}
+            />
           </Flex>
         </div>
         <div className="modal-footer">
