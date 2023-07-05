@@ -35,7 +35,6 @@ function TaskItem(props) {
             if (closeState == false) {
               props.taskDetailsVisibilityHandler(true);
               props.taskDetailsMode("Editing");
-              console.log("Clicked at: " + props.name + " id: " + props.id);
               props.taskDetailsIdHandler(props.id);
               props.taskDetailsNameHandler(props.name);
               props.taskDetailsPriorityHandler(props.priority);
@@ -47,7 +46,6 @@ function TaskItem(props) {
             <CloseButton
             size="sm"
             onClick={() => {
-                // console.log("Removed item");
                 props.removeTaskHandler(props.id);
             }}
             onMouseOver={() => {

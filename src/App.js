@@ -5,20 +5,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import TaskDetails from "./components/task-details/TaskDetails";
 import { SimpleGrid, Box } from '@chakra-ui/react'
+import TaskTemplate from "./components/task-template/TaskTemplate";
 
 function App() {
 
+  const templatesObj = [
+    { name: "Do push-ups" },
+    { name: "Run for a 100 meters" }
+  ];
 
   const tasksObj = [
-    { id: 1, name: "First Task", state:"active", description: "First active task desc", priority: "High" },
-    { id: 2, name: "Second Task", state:"active", description: "Second active task desc", priority: "Low" },
-    { id: 3, name: "Third Task", state:"active", description: "Third active task desc", priority: "Low" },
-    { id: 1901, name: "Fourth Task", state:"backlog", description: "First backlog task desc", priority: "Low" },
-    { id: 1902, name: "Fifth Task", state:"backlog", description: "Second backlog task desc", priority: "Low" }
+    { id: 1, name: "First Task", isTemplate:"false", state:"active", description: "First active task desc", priority: "High" },
+    { id: 2, name: "Second Task", isTemplate:"false", state:"active", description: "Second active task desc", priority: "Low" },
+    { id: 3, name: "Third Task", isTemplate:"false", state:"active", description: "Third active task desc", priority: "Low" },
+    { id: 1901, name: "Fourth Task", isTemplate:"false", state:"backlog", description: "First backlog task desc", priority: "Low" },
+    { id: 1902, name: "Fifth Task", isTemplate:"false", state:"backlog", description: "Second backlog task desc", priority: "Low" }
   ];
 
   const [tableState, setTableState] = useState("initial");
   const [show, setShow] = useState(false);
+  const [showTaskTemplate, setShowTaskTemplate] = useState(false)
   const [taskDetailsId, setTaskDetailsId] = useState(0); 
   const [taskDetailsName, setTaskDetailsName] = useState("Initial task");
   const [taskDetailsPriority, setTaskDetailsPriority] = useState("Low");
@@ -27,7 +33,6 @@ function App() {
   const [tasks, setTasks] = useState(tasksObj)
 
   function resetDetailWindow() {
-    console.log("New taskDetailsId: " + taskDetailsId);
     setTaskDetailsName("...Please type here your title...")
     setTaskDetailsPriority("Low")
     setTaskDetailsDescription("")
@@ -77,9 +82,10 @@ function App() {
           changeTableState={(state) => setTableState(state)}
           updateStateHandler={updateStateHandler}
           taskDetailsVisibilityHandler={setShow}
+          taskTemplateVisibilityHandler={setShowTaskTemplate}
           taskDetailsModeHandler={setTaskDetailsMode}
         />
-        <SimpleGrid minChildWidth="370px" spacing='10px'>
+        <SimpleGrid minChildWidth="370px" spacing="10px">
           {tasks.map(({ id, name, priority, description }) => {
             return (
               <Box>
@@ -113,6 +119,10 @@ function App() {
           taskDetailsPriorityHandler={setTaskDetailsPriority}
           taskDetailsDescriptionHandler={setTaskDetailsDescription}
           taskDetailsOnChangeNotifier={taskDetailsOnChangeNotifier}
+        />
+        <TaskTemplate
+          show={showTaskTemplate}
+          taskTemplateVisibilityHandler={setShowTaskTemplate}
         />
       </div>
     </div>

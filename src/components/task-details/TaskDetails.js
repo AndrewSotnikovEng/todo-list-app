@@ -3,7 +3,6 @@ import styles from "./TaskDetails.css";
 import { Input, Textarea, Select, Stack } from '@chakra-ui/react'
 
 const TaskDetails = props => {
-  console.log(props.show, props.taskHeader, props.taskPriority);
   if(!props.show) {
     return null
   }

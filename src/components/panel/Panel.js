@@ -4,6 +4,7 @@ import "react-icons/fa";
 import { Stack } from '@chakra-ui/react'
 import ToggleStateButton from "../buttons/ToggleStateButton";
 import AddButton from "../buttons/AddButton";
+import TemplateButton from "../buttons/TemplateButton";
 
 function Panel(props) {
   
@@ -12,13 +13,11 @@ function Panel(props) {
     {
       setCurrentState("active")
       props.changeTableState("active")
-      console.log("State was changed to ative");
     } 
     else if (currentState == "active")
     {
       setCurrentState("backlog")
       props.changeTableState("backlog")
-      console.log("State was changed to backlog");
     }    
   }
 
@@ -35,6 +34,9 @@ function Panel(props) {
           <AddButton
             taskDetailsVisibilityHandler={props.taskDetailsVisibilityHandler}
             taskDetailsModeHandler={props.taskDetailsModeHandler}
+          />
+          <TemplateButton
+            taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
           />
         </Stack>
       </div>

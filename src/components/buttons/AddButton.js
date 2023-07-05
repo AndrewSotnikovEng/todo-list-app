@@ -6,7 +6,7 @@ import { AiFillPlusCircle } from 'react-icons/ai';
 
 function AddButton(props) {
     return (
-    <Button w={20} onClick={ () => { 
+    <Button w={"120px"} onClick={ () => { 
         props.taskDetailsVisibilityHandler(true)
         props.taskDetailsModeHandler("Adding")
         } } leftIcon={<AiFillPlusCircle />} colorScheme='teal' variant='outline'>
