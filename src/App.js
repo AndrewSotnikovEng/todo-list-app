@@ -35,6 +35,30 @@ function App() {
     setTasks(modifiedTasks)
   }
 
+  function taskDetailsOnChangeNotifier() {
+    if (taskDetailsMode == "Editing") {
+      const modifiedTasks = tasks.map((li) => {
+        if (li.id == taskDetailsId) {
+          li.name = taskDetailsName;
+          li.priority = taskDetailsPriority;
+          li.description = taskDetailsDescription;
+        }
+      });
+      resetDetailWindow();
+    } else if (taskDetailsMode == "Adding") {              
+      const newId = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1;
+      setTaskDetailsId(newId);
+      var modfiedTasks = tasks;
+      modfiedTasks.push({
+        id: newId,
+        name: taskDetailsName,
+        description: taskDetailsDescription,
+        priority: taskDetailsPriority,
+      });
+      resetDetailWindow();
+    }
+  }
+
   return (
     <div>
       <div>
@@ -72,30 +96,7 @@ function App() {
           taskDetailsNameHandler={setTaskDetailsName}
           taskDetailsPriorityHandler={setTaskDetailsPriority}
           taskDetailsDescriptionHandler={setTaskDetailsDescription}
-          taskDetailsOnChangeNotifier={() => {
-            // setTaskDetailsName(newTitle)
-            if (taskDetailsMode == "Editing") {
-              const modifiedTasks = tasks.map((li) => {
-                if (li.id == taskDetailsId) {
-                  li.name = taskDetailsName;
-                  li.priority = taskDetailsPriority;
-                  li.description = taskDetailsDescription;
-                }
-              });
-              resetDetailWindow();
-            } else if (taskDetailsMode == "Adding") {              
-              const newId = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1;
-              setTaskDetailsId(newId);
-              var modfiedTasks = tasks;
-              modfiedTasks.push({
-                id: newId,
-                name: taskDetailsName,
-                description: taskDetailsDescription,
-                priority: taskDetailsPriority,
-              });
-              resetDetailWindow();
-            }
-          }}
+          taskDetailsOnChangeNotifier={taskDetailsOnChangeNotifier}
         />
       </div>
     </div>
