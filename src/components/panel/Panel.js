@@ -26,17 +26,19 @@ function Panel(props) {
 
     return (
       <div>
-        <Stack direction='row' 
-        spacing={4}
-        m="30px">
-          <ToggleStateButton buttonName={ currentState } toggleButtonView={ () =>  toggleButtonView() }/> 
-          <AddButton 
-            taskDetailsVisibilityHandler={ props.taskDetailsVisibilityHandler }
-            taskDetailsModeHandler= { props.taskDetailsModeHandler }
-          /> 
+        <Stack direction="row" spacing={4} m="30px">
+          <ToggleStateButton
+            buttonName={currentState}
+            toggleButtonView={() => toggleButtonView()}
+            updateStateHandler={props.updateStateHandler}
+          />
+          <AddButton
+            taskDetailsVisibilityHandler={props.taskDetailsVisibilityHandler}
+            taskDetailsModeHandler={props.taskDetailsModeHandler}
+          />
         </Stack>
-      </div>      
-    )
+      </div>
+    );
 }
 
 export default Panel;

@@ -4,14 +4,17 @@ import Panel from "./components/panel/Panel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import TaskDetails from "./components/task-details/TaskDetails";
+import { SimpleGrid, Box } from '@chakra-ui/react'
 
 function App() {
 
 
   const tasksObj = [
-    { id: 1, name: "First Task", description: "First task desc", priority: "High" },
-    { id: 2, name: "Second Task", description: "Second task desc", priority: "Low" },
-    { id: 1689, name: "Third Task", description: "Third task desc", priority: "Low" },
+    { id: 1, name: "First Task", state:"active", description: "First active task desc", priority: "High" },
+    { id: 2, name: "Second Task", state:"active", description: "Second active task desc", priority: "Low" },
+    { id: 3, name: "Third Task", state:"active", description: "Third active task desc", priority: "Low" },
+    { id: 1901, name: "Fourth Task", state:"backlog", description: "First backlog task desc", priority: "Low" },
+    { id: 1902, name: "Fifth Task", state:"backlog", description: "Second backlog task desc", priority: "Low" }
   ];
 
   const [tableState, setTableState] = useState("initial");
@@ -33,6 +36,14 @@ function App() {
   function removeTaskHandler(id) {
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
+  }
+
+  function updateStateHandler() {
+    if (tableState == "active") {
+      setTasks( tasksObj.filter( elem => elem.state == "backlog"))
+    } else if ((tableState == "backlog")) {
+      setTasks( tasksObj.filter( elem => elem.state == "active"))
+    }
   }
 
   function taskDetailsOnChangeNotifier() {
@@ -64,27 +75,32 @@ function App() {
       <div>
         <Panel
           changeTableState={(state) => setTableState(state)}
+          updateStateHandler={updateStateHandler}
           taskDetailsVisibilityHandler={setShow}
           taskDetailsModeHandler={setTaskDetailsMode}
         />
-        {tasks.map(({ id, name, priority, description }) => {
-          return (
-            <TaskItem
-              taskDetailsVisibilityHandler={setShow}
-              isShown={show}
-              taskDetailsMode={setTaskDetailsMode}
-              taskDetailsIdHandler={setTaskDetailsId}
-              taskDetailsNameHandler={setTaskDetailsName}
-              taskDetailsPriorityHandler={setTaskDetailsPriority}
-              taskDetailsDescriptionHandler={setTaskDetailsDescription}
-              id={id}
-              name={name}
-              priority={priority}
-              description={description}
-              removeTaskHandler={removeTaskHandler}
-            />
-          );
-        })}
+        <SimpleGrid minChildWidth="370px" spacing='10px'>
+          {tasks.map(({ id, name, priority, description }) => {
+            return (
+              <Box>
+                <TaskItem
+                  taskDetailsVisibilityHandler={setShow}
+                  isShown={show}
+                  taskDetailsMode={setTaskDetailsMode}
+                  taskDetailsIdHandler={setTaskDetailsId}
+                  taskDetailsNameHandler={setTaskDetailsName}
+                  taskDetailsPriorityHandler={setTaskDetailsPriority}
+                  taskDetailsDescriptionHandler={setTaskDetailsDescription}
+                  id={id}
+                  name={name}
+                  priority={priority}
+                  description={description}
+                  removeTaskHandler={removeTaskHandler}
+                />
+              </Box>
+            );
+          })}
+        </SimpleGrid>
         <p style={{ margin: 20 }}>Current state is: {tableState}</p>
         <TaskDetails
           show={show}

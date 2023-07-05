@@ -7,7 +7,12 @@ import { FaBox } from 'react-icons/fa';
 
 function ToggleStateButton(props) {
     return (
-    <Button onClick={ props.toggleButtonView } 
+    <Button onClick={
+        () => {
+            props.toggleButtonView()
+            props.updateStateHandler()
+        }  
+    } 
     w={"120px"}
     leftIcon={ props.buttonName == "active" ?  <MdTableRestaurant /> : <FaBox />} 
     colorScheme='teal' variant='outline'>

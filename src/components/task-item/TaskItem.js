@@ -26,7 +26,7 @@ function TaskItem(props) {
     return (
       <div>
         <Card
-          maxW="350px"
+          maxW="390px"
           m="20px"
           border="1px"
           borderColor="aqua"
@@ -71,6 +71,7 @@ function TaskItem(props) {
           <CardFooter
             justify="space-between"
             flexWrap="wrap"
+            pl={"5px"}
             sx={{
               "& > button": {
                 minW: "110px",
