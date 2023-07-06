@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Select, Button, Flex, Grid, GridItem } from '@chakra-ui/react'
 import { AiFillPlusCircle, AiOutlineCheck } from 'react-icons/ai';
 import styles from "./TaskTemplate.css";
@@ -6,24 +6,19 @@ import styles from "./TaskTemplate.css";
 function TaskTemplate(props) {
 
     const [ currentState, setCurrentState ] = useState("selecting")
+    const [ currentFilterValue , setCurrentFilterValue ] = useState("")
+    const [ filteredTemplates , setFilteredTemplates ] = useState(props.templates)
     const [ additionModeVisibility, setAdditionModeVisibility ] = useState("none")
+    const [ filterVisibility, setFilterVisibility ] = useState("visible")
     const [ selectingModeVisibility, setSelectingModeVisibility ] = useState("inline")
     const [ templateInputValue, setTemplateInputBlockValue ] = useState("")
-    // function showForState() {
 
-    //         console.log(currentState)
-    //         if (currentState == "selecting") {
-             
-    //         } else if (currentState == "adding") {
-    //           <Input
-    //             size="sm"
-    //             value={props.taskHeader}
-    //             borderWidth={1}
-    //             borderColor="black"
-    //           />;
-    //         }
-    //       }
-    // }
+    useEffect(() => {
+      setFilteredTemplates( props.templates.filter (template => template.name.toLowerCase()
+                  .includes(currentFilterValue.toLowerCase() )))
+      console.log("Updated filter value: ", currentFilterValue);
+    }, [currentFilterValue]);
+
 
     if(!props.show) {
     return null
@@ -41,13 +36,17 @@ function TaskTemplate(props) {
             templateColumns="repeat(2, 1fr)"
             maxWidth={"500px"}
           >
-            <GridItem rowSpan={1} colSpan={2}>
+            <GridItem rowSpan={1} colSpan={2} visibility={filterVisibility}>
               <Input
                 size="sm"
-                value={props.taskHeader}
+                value={currentFilterValue}
                 borderWidth={1}
                 borderColor="black"
                 maxWidth={"450px"}
+                onChange={ e => {
+                  e.persist()
+                  setCurrentFilterValue(e.target.value);
+                }}
               />
             </GridItem>
             <GridItem display={selectingModeVisibility} colSpan={1} w={"450px"}>
@@ -60,11 +59,11 @@ function TaskTemplate(props) {
                 w={"450px"}
               >
                 {
-                props.templates.map( template => {
-                   return ( <option value={template.key}>{ template.name }</option> )
-                }
-                )
-              }                
+                filteredTemplates.map( template => {
+                    return <option value={template.key}>{template.name}</option>; 
+                    } 
+                  )
+                }            
               </Select>
             </GridItem>
             <GridItem display={selectingModeVisibility} colSpan={1}>
@@ -81,6 +80,7 @@ function TaskTemplate(props) {
                   setSelectingModeVisibility("none");
                   setAdditionModeVisibility("inline");
                   setTemplateInputBlockValue("")
+                  setFilterVisibility("hidden")
                 }}
               />
             </GridItem>
@@ -107,6 +107,7 @@ function TaskTemplate(props) {
                 onClick={() => {
                   setSelectingModeVisibility("inline");
                   setAdditionModeVisibility("none");
+                  setFilterVisibility("visible")
                   props.addTemplateBtnHandler(templateInputValue);
                 }}
               />
