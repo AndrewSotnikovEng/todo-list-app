@@ -10,8 +10,8 @@ import TaskTemplate from "./components/task-template/TaskTemplate";
 function App() {
 
   const templatesObj = [
-    { name: "Do push-ups" },
-    { name: "Run for a 100 meters" }
+    { key:0, name: "Do push-ups" },
+    { key:1, name: "Run for a 100 meters" }
   ];
 
   const tasksObj = [
@@ -31,6 +31,7 @@ function App() {
   const [taskDetailsDescription, setTaskDetailsDescription] = useState("");
   const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
   const [tasks, setTasks] = useState(tasksObj)
+  const [templates, setTemplates] = useState(templatesObj)
 
   function resetDetailWindow() {
     setTaskDetailsName("...Please type here your title...")
@@ -73,6 +74,21 @@ function App() {
       });
       resetDetailWindow();
     }
+  }
+
+  function addTemplateBtnHandler(templateName) {
+    if (templateName == "" || templateName == null) {
+      console.log("Received empty string");
+      return
+    }
+    var tmpArray = templates
+    var key;
+    if(templates.length > 0) {
+      key = templates[templates.length - 1].id + 1 
+    }
+    tmpArray.push({ "id": key, "name": templateName })
+    setTemplates(tmpArray)
+    console.log(templates)
   }
 
   return (
@@ -123,6 +139,8 @@ function App() {
         <TaskTemplate
           show={showTaskTemplate}
           taskTemplateVisibilityHandler={setShowTaskTemplate}
+          templates={templates}
+          addTemplateBtnHandler={addTemplateBtnHandler}
         />
       </div>
     </div>

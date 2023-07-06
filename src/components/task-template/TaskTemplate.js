@@ -8,6 +8,7 @@ function TaskTemplate(props) {
     const [ currentState, setCurrentState ] = useState("selecting")
     const [ additionModeVisibility, setAdditionModeVisibility ] = useState("none")
     const [ selectingModeVisibility, setSelectingModeVisibility ] = useState("inline")
+    const [ templateInputValue, setTemplateInputBlockValue ] = useState("")
     // function showForState() {
 
     //         console.log(currentState)
@@ -58,8 +59,12 @@ function TaskTemplate(props) {
                 mt={2}
                 w={"450px"}
               >
-                <option value="task1">Task template 1</option>
-                <option value="task2">Task template 2</option>
+                {
+                props.templates.map( template => {
+                   return ( <option value={template.key}>{ template.name }</option> )
+                }
+                )
+              }                
               </Select>
             </GridItem>
             <GridItem display={selectingModeVisibility} colSpan={1}>
@@ -75,16 +80,18 @@ function TaskTemplate(props) {
                 onClick={() => {
                   setSelectingModeVisibility("none");
                   setAdditionModeVisibility("inline");
+                  setTemplateInputBlockValue("")
                 }}
               />
             </GridItem>
             <GridItem display={additionModeVisibility} colSpan={1} w={"450px"}>
               <Input
                 size="sm"
-                value={props.taskHeader}
                 borderWidth={1}
                 borderColor="black"
                 mt={2}
+                value={templateInputValue}
+                onChange={(e) => setTemplateInputBlockValue(e.target.value)}
               />
             </GridItem>
             <GridItem display={additionModeVisibility} colSpan={1}>
@@ -100,6 +107,7 @@ function TaskTemplate(props) {
                 onClick={() => {
                   setSelectingModeVisibility("inline");
                   setAdditionModeVisibility("none");
+                  props.addTemplateBtnHandler(templateInputValue);
                 }}
               />
             </GridItem>
