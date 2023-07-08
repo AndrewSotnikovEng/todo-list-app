@@ -7,16 +7,20 @@ function TaskTemplate(props) {
 
     const [ currentState, setCurrentState ] = useState("selecting")
     const [ currentFilterValue , setCurrentFilterValue ] = useState("")
-    const [ filteredTemplates , setFilteredTemplates ] = useState(props.templates)
+    const [ filteredTemplates , setFilteredTemplates ] = useState([])
     const [ additionModeVisibility, setAdditionModeVisibility ] = useState("none")
     const [ filterVisibility, setFilterVisibility ] = useState("visible")
     const [ selectingModeVisibility, setSelectingModeVisibility ] = useState("inline")
     const [ templateInputValue, setTemplateInputBlockValue ] = useState("")
 
+    useEffect( () => {
+      setFilteredTemplates(props.templates)
+    }, [props.templates] )
+
     useEffect(() => {
       setFilteredTemplates( props.templates.filter (template => template.name.toLowerCase()
                   .includes(currentFilterValue.toLowerCase() )))
-      console.log("Updated filter value: ", currentFilterValue);
+      // console.log("Updated filter value: ", currentFilterValue);
     }, [currentFilterValue]);
 
 

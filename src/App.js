@@ -10,10 +10,10 @@ import TaskTemplate from "./components/task-template/TaskTemplate";
 
 function App() {
 
-  const templatesObj = [
-    { key:0, name: "Do push-ups" },
-    { key:1, name: "Run for a 100 meters" }
-  ];
+  // const templatesObj = [
+  //   { key:0, name: "Do push-ups" },
+  //   { key:1, name: "Run for a 100 meters" }
+  // ];
 
   // const tasksObj = [
   //   { id: 1, name: "First Task", isTemplate:"false", state:"active", description: "First active task desc", priority: "High" },
@@ -37,6 +37,11 @@ function App() {
     axios.get("http://localhost:3333/tasks").then((response) => {
       console.log("Response data: " + response.data);
       setTasks(response.data);
+    });
+
+    axios.get("http://localhost:3333/templates").then((response) => {
+      console.log("Templates data: " + response.data);
+      setTemplates(response.data);
     });
   }, []);
 
@@ -84,7 +89,7 @@ function App() {
     setCurrentTasks(tasks)
   }, [tasks]);
 
-  const [templates, setTemplates] = useState(templatesObj)
+  const [templates, setTemplates] = useState([])
 
 
   function resetDetailWindow() {
