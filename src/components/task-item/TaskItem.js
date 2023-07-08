@@ -27,6 +27,7 @@ function TaskItem(props) {
       <div>
         <Card
           maxW="390px"
+          height="180px"
           m="20px"
           border="1px"
           borderColor="aqua"
@@ -37,6 +38,7 @@ function TaskItem(props) {
               props.taskDetailsMode("Editing");
               props.taskDetailsIdHandler(props.id);
               props.taskDetailsNameHandler(props.name);
+              props.taskDetailsStateHandler(props.state);
               props.taskDetailsPriorityHandler(props.priority);
               props.taskDetailsDescriptionHandler(props.description);
             }
