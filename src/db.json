@@ -1,0 +1,14 @@
+{
+   "tasks": [
+        { "id": 1, "name": "First Task", "isTemplate":"false", "state":"active", "description": "First active task desc", "priority": "High" },
+        { "id": 2, "name": "Second Task", "isTemplate":"false", "state":"active", "description": "Second active task desc", "priority": "Low" },
+        { "id": 3, "name": "Third Task", "isTemplate":"false", "state":"active", "description": "Third active task desc", "priority": "Low" },
+        { "id": 1901, "name": "Fourth Task", "isTemplate":"false", "state":"backlog", "description": "First backlog task desc", "priority": "Low" },
+        { "id": 1902, "name": "Fifth Task", "isTemplate":"false", "state":"backlog", "description": "Second backlog task desc", "priority": "Low" }
+      ],
+    "templates": [
+      { "key": 0, "name" : "Do push-ups" },
+      { "key": 1, "name" : "Run for a 100 meters" }
+    ]
+
+}
