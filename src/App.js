@@ -83,6 +83,13 @@ function App() {
       })
   }
 
+  function createTemplate(template) {
+    axios
+      .post(`http://localhost:3333/templates`, {
+        id: template.id,
+        name: template.name,
+      })
+  }
 
   const [currentTasks, setCurrentTasks] = useState([])
   React.useEffect(() => {
@@ -152,11 +159,15 @@ function App() {
       return
     }
     var tmpArray = templates
-    var key;
+    var id;
     if(templates.length > 0) {
-      key = templates[templates.length - 1].id + 1 
+      id = templates[templates.length - 1].id + 1 
+    } else {
+      id = 1
     }
-    tmpArray.push({ "id": key, "name": templateName })
+    var template = { id: id, name: templateName }
+    tmpArray.push(template)
+    createTemplate(template)
     setTemplates(tmpArray)
     console.log(templates)
   }

@@ -10,7 +10,7 @@
     },
     {
       "id": 2,
-      "name": "Second Task",
+      "name": "Second Task - Once more",
       "isTemplate": false,
       "state": "active",
       "description": "",
@@ -18,7 +18,7 @@
     },
     {
       "id": 3,
-      "name": "Third Task",
+      "name": "Third Task - Once more",
       "isTemplate": false,
       "state": "active",
       "description": "Third active task desc",
@@ -55,16 +55,28 @@
       "state": "backlog",
       "description": "This tasks for backlog and has high priority",
       "priority": "High"
+    },
+    {
+      "id": 8,
+      "name": "Initial task",
+      "isTemplate": false,
+      "state": "",
+      "description": "",
+      "priority": "Low"
     }
   ],
   "templates": [
     {
-      "key": 0,
+      "id": 0,
       "name": "Do push-ups"
     },
     {
-      "key": 1,
+      "id": 1,
       "name": "Run for a 100 meters"
+    },
+    {
+      "id": 2,
+      "name": "Temporary template"
     }
   ]
 }
