@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select, Button, Flex, Grid, GridItem } from '@chakra-ui/react'
+import { Menu, MenuButton, MenuList, MenuItem, MenuGroup, MenuDivider } from '@chakra-ui/react'
 import { AiFillPlusCircle, AiOutlineCheck } from 'react-icons/ai';
+import {MdDriveFileRenameOutline, MdOutlineDeleteOutline } from 'react-icons/md'
+import {GrActions} from 'react-icons/gr'
 import styles from "./TaskTemplate.css";
 
 function TaskTemplate(props) {
@@ -40,19 +43,63 @@ function TaskTemplate(props) {
             templateColumns="repeat(2, 1fr)"
             maxWidth={"500px"}
           >
-            <GridItem rowSpan={1} colSpan={2} visibility={filterVisibility}>
+            <GridItem rowSpan={1} colSpan={1} visibility={filterVisibility}>
               <Input
                 size="sm"
                 value={currentFilterValue}
                 borderWidth={1}
                 borderColor="black"
                 maxWidth={"450px"}
-                onChange={ e => {
-                  e.persist()
+                onChange={(e) => {
+                  e.persist();
                   setCurrentFilterValue(e.target.value);
                 }}
               />
             </GridItem>
+            <GridItem>
+              <Menu>
+                <MenuButton
+                  size="sm"
+                  as={Button}
+                  leftIcon={<GrActions />}
+                  ml={3}
+                  // mt={2}
+                  pl={3}
+                  pr={1}
+                  borderWidth={1}
+                  borderColor={"black"}
+                ></MenuButton>
+                <MenuList minW="20px">
+                  <MenuItem>
+                    <Button
+                      leftIcon={<MdDriveFileRenameOutline />}
+                      width="30px"
+                      height="30px"
+                      // ml={3}
+                      // mt={2}
+                      pl={3}
+                      pr={1}
+                      borderWidth={1}
+                      borderColor={"black"}
+                    />
+                  </MenuItem>
+                  <MenuItem>
+                    <Button
+                      leftIcon={<MdOutlineDeleteOutline /> }
+                      width="30px"
+                      height="30px"
+                      // ml={3}
+                      // mt={2}
+                      pl={3}
+                      pr={1}
+                      borderWidth={1}
+                      borderColor={"black"}
+                    />
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </GridItem>
+
             <GridItem display={selectingModeVisibility} colSpan={1} w={"450px"}>
               <Select
                 size="sm"
@@ -62,12 +109,9 @@ function TaskTemplate(props) {
                 mt={2}
                 w={"450px"}
               >
-                {
-                filteredTemplates.map( template => {
-                    return <option value={template.key}>{template.name}</option>; 
-                    } 
-                  )
-                }            
+                {filteredTemplates.map((template) => {
+                  return <option value={template.key}>{template.name}</option>;
+                })}
               </Select>
             </GridItem>
             <GridItem display={selectingModeVisibility} colSpan={1}>
@@ -83,8 +127,8 @@ function TaskTemplate(props) {
                 onClick={() => {
                   setSelectingModeVisibility("none");
                   setAdditionModeVisibility("inline");
-                  setTemplateInputBlockValue("")
-                  setFilterVisibility("hidden")
+                  setTemplateInputBlockValue("");
+                  setFilterVisibility("hidden");
                 }}
               />
             </GridItem>
@@ -111,7 +155,7 @@ function TaskTemplate(props) {
                 onClick={() => {
                   setSelectingModeVisibility("inline");
                   setAdditionModeVisibility("none");
-                  setFilterVisibility("visible")
+                  setFilterVisibility("visible");
                   props.addTemplateBtnHandler(templateInputValue);
                 }}
               />
