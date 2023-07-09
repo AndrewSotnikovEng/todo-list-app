@@ -10,19 +10,6 @@ import TaskTemplate from "./components/task-template/TaskTemplate";
 
 function App() {
 
-  // const templatesObj = [
-  //   { key:0, name: "Do push-ups" },
-  //   { key:1, name: "Run for a 100 meters" }
-  // ];
-
-  // const tasksObj = [
-  //   { id: 1, name: "First Task", isTemplate:"false", state:"active", description: "First active task desc", priority: "High" },
-  //   { id: 2, name: "Second Task", isTemplate:"false", state:"active", description: "Second active task desc", priority: "Low" },
-  //   { id: 3, name: "Third Task", isTemplate:"false", state:"active", description: "Third active task desc", priority: "Low" },
-  //   { id: 1901, name: "Fourth Task", isTemplate:"false", state:"backlog", description: "First backlog task desc", priority: "Low" },
-  //   { id: 1902, name: "Fifth Task", isTemplate:"false", state:"backlog", description: "Second backlog task desc", priority: "Low" }
-  // ];
-
   const [tableState, setTableState] = useState("active");
   const [show, setShow] = useState(false);
   const [showTaskTemplate, setShowTaskTemplate] = useState(false)
@@ -44,7 +31,6 @@ function App() {
       setTemplates(response.data);
     });
   }, []);
-
 
   function updateTask(task) {
     axios
@@ -89,6 +75,21 @@ function App() {
         id: template.id,
         name: template.name,
       })
+    var tmpTemplates = templates
+    tmpTemplates.push(template)
+    setTemplates(tmpTemplates)
+  }
+
+  function deleteTemplate(id) {
+    var id = templates.filter( template => template.id == id)[0].id
+    axios
+      .delete(`http://localhost:3333/templates/${id}`)
+      .then(() => {
+        alert("Template deleted!");
+      });
+      
+      var tmpTemplates = templates.filter(template => template.id != id)
+      setTemplates(tmpTemplates);
   }
 
   const [currentTasks, setCurrentTasks] = useState([])
@@ -98,12 +99,11 @@ function App() {
 
   const [templates, setTemplates] = useState([])
 
-
   function resetDetailWindow() {
-    setTaskDetailsName("...Please type here your title...")
-    setTaskDetailsPriority("Low")
-    setTaskDetailsDescription("")
-    setTaskDetailsState("")
+    setTaskDetailsName("...Please type here your title...");
+    setTaskDetailsPriority("Low");
+    setTaskDetailsDescription("");
+    setTaskDetailsState("");
   }
 
   function removeTaskHandler(id) {
@@ -166,10 +166,13 @@ function App() {
       id = 1
     }
     var template = { id: id, name: templateName }
-    tmpArray.push(template)
     createTemplate(template)
     setTemplates(tmpArray)
     console.log(templates)
+  }
+
+  function removeTemplateBtnHandler(id) {
+    deleteTemplate(id)
   }
 
   return (
@@ -226,6 +229,7 @@ function App() {
           taskTemplateVisibilityHandler={setShowTaskTemplate}
           templates={templates}
           addTemplateBtnHandler={addTemplateBtnHandler}
+          removeTemplateBtnHandler={removeTemplateBtnHandler}
         />
       </div>
     </div>

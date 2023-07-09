@@ -11,10 +11,16 @@ function TaskTemplate(props) {
     const [ currentState, setCurrentState ] = useState("selecting")
     const [ currentFilterValue , setCurrentFilterValue ] = useState("")
     const [ filteredTemplates , setFilteredTemplates ] = useState([])
+    const [ selectedTemplateValue, setSelectedTemplateValue ] = useState([])
     const [ additionModeVisibility, setAdditionModeVisibility ] = useState("none")
     const [ filterVisibility, setFilterVisibility ] = useState("visible")
     const [ selectingModeVisibility, setSelectingModeVisibility ] = useState("inline")
     const [ templateInputValue, setTemplateInputBlockValue ] = useState("")
+
+    const hendleSelectChange = (e) => {
+      setSelectedTemplateValue(e.target.value);
+      // console.log(selectedTemplateValue);
+    };
 
     useEffect( () => {
       setFilteredTemplates(props.templates)
@@ -26,6 +32,10 @@ function TaskTemplate(props) {
       // console.log("Updated filter value: ", currentFilterValue);
     }, [currentFilterValue]);
 
+
+    useEffect( () =>  {
+      console.log(selectedTemplateValue);
+    }, [selectedTemplateValue])
 
     if(!props.show) {
     return null
@@ -85,7 +95,7 @@ function TaskTemplate(props) {
                   </MenuItem>
                   <MenuItem>
                     <Button
-                      leftIcon={<MdOutlineDeleteOutline /> }
+                      leftIcon={<MdOutlineDeleteOutline />}
                       width="30px"
                       height="30px"
                       // ml={3}
@@ -94,6 +104,10 @@ function TaskTemplate(props) {
                       pr={1}
                       borderWidth={1}
                       borderColor={"black"}
+                      onClick={() => {
+                        props.removeTemplateBtnHandler(selectedTemplateValue)
+                        console.log(selectedTemplateValue);
+                      }}
                     />
                   </MenuItem>
                 </MenuList>
@@ -108,9 +122,11 @@ function TaskTemplate(props) {
                 borderColor="black"
                 mt={2}
                 w={"450px"}
+                value={selectedTemplateValue}
+                onChange={hendleSelectChange}
               >
                 {filteredTemplates.map((template) => {
-                  return <option value={template.key}>{template.name}</option>;
+                  return <option value={template.id}>{template.name}</option>;
                 })}
               </Select>
             </GridItem>
