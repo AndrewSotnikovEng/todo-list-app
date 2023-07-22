@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Input, Select, Button, Flex, Grid, GridItem } from '@chakra-ui/react'
+import React, { useState, useEffect , KeyboardEvent} from "react";
+import { Input, Select, Button, Flex, Grid, GridItem, Tooltip } from '@chakra-ui/react'
 import { Menu, MenuButton, MenuList, MenuItem, MenuGroup, MenuDivider } from '@chakra-ui/react'
 import { AiFillPlusCircle, AiOutlineCheck } from 'react-icons/ai';
 import {MdDriveFileRenameOutline, MdOutlineDeleteOutline } from 'react-icons/md'
@@ -16,6 +16,9 @@ function TaskTemplate(props) {
     const [ filterVisibility, setFilterVisibility ] = useState("visible")
     const [ selectingModeVisibility, setSelectingModeVisibility ] = useState("inline")
     const [ templateInputValue, setTemplateInputBlockValue ] = useState("")
+    const [ templateEditingMode, setTemplateEditingMode ] = useState(false)
+    const [ isFocused, setIsFocused ] = useState(false)
+    const [ toolTipInfo, setTooltipInfo ] = useState("")
 
     const hendleSelectChange = (e) => {
       setSelectedTemplateValue(e.target.value);
@@ -27,8 +30,14 @@ function TaskTemplate(props) {
     }, [props.templates] )
 
     useEffect(() => {
-      setFilteredTemplates( props.templates.filter (template => template.name.toLowerCase()
-                  .includes(currentFilterValue.toLowerCase() )))
+      if (!templateEditingMode) {
+        setFilteredTemplates( props.templates.filter (template => template.name.toLowerCase()
+        .includes(currentFilterValue.toLowerCase() )))
+      } else {
+        setFilteredTemplates( props.templates.filter (template => template.name.toLowerCase()
+        .includes("")))
+      }
+ 
       // console.log("Updated filter value: ", currentFilterValue);
     }, [currentFilterValue]);
 
@@ -42,7 +51,7 @@ function TaskTemplate(props) {
     }
 
   return (
-    <div className="modal">
+    <div className="modal" id="modal-win">
       <div className="modal-content">
         <div className="modal-header">
           {/* <h4 className="modal-title"> {props.taskHeader} </h4> */}
@@ -54,17 +63,30 @@ function TaskTemplate(props) {
             maxWidth={"500px"}
           >
             <GridItem rowSpan={1} colSpan={1} visibility={filterVisibility}>
-              <Input
-                size="sm"
-                value={currentFilterValue}
-                borderWidth={1}
-                borderColor="black"
-                maxWidth={"450px"}
-                onChange={(e) => {
-                  e.persist();
-                  setCurrentFilterValue(e.target.value);
-                }}
-              />
+              <Tooltip
+                width="100%"
+                label={toolTipInfo}
+                placement="bottom"
+                bg="black"
+                color="white"
+              >
+                <Input
+                  size="sm"
+                  id="filter-template-input"
+                  value={currentFilterValue}
+                  borderWidth={1}
+                  borderColor="black"
+                  maxWidth={"450px"}
+                  onFocus={() => {
+                    // setIsFocused(true);
+                  }}
+                  boxShadow={isFocused ? `0px 0px 2px 2px blue` : "none"}
+                  onChange={(e) => {
+                    e.persist();
+                    setCurrentFilterValue(e.target.value);
+                  }}
+                />
+              </Tooltip>
             </GridItem>
             <GridItem>
               <Menu>
@@ -91,6 +113,15 @@ function TaskTemplate(props) {
                       pr={1}
                       borderWidth={1}
                       borderColor={"black"}
+                      onClick={() => {
+                        props.editTemplateBtnHandler(selectedTemplateValue);
+                        setTemplateEditingMode(true);
+                        setCurrentFilterValue(props.templates.filter(item => item.id == selectedTemplateValue)[0].name);
+                        setTooltipInfo("Please rename value");
+                        setIsFocused(true);
+                        console.log(selectedTemplateValue);
+                      }
+                    }
                     />
                   </MenuItem>
                   <MenuItem>
@@ -105,7 +136,7 @@ function TaskTemplate(props) {
                       borderWidth={1}
                       borderColor={"black"}
                       onClick={() => {
-                        props.removeTemplateBtnHandler(selectedTemplateValue)
+                        props.removeTemplateBtnHandler(selectedTemplateValue);
                         console.log(selectedTemplateValue);
                       }}
                     />
@@ -125,9 +156,9 @@ function TaskTemplate(props) {
                 value={selectedTemplateValue}
                 onChange={hendleSelectChange}
               >
-                {filteredTemplates.map((template) => {
-                  return <option value={template.id}>{template.name}</option>;
-                })}
+                    {filteredTemplates.map((template) => {
+                      return <option value={template.id}>{template.name}</option>;
+                    })}
               </Select>
             </GridItem>
             <GridItem display={selectingModeVisibility} colSpan={1}>

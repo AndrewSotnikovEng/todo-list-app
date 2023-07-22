@@ -92,6 +92,13 @@ function App() {
       setTemplates(tmpTemplates);
   }
 
+  function editTemplate(id) {
+    var filterInput = document.getElementById("filter-template-input")
+    
+    filterInput.focus();
+    // filterInput.scrollIntoView();
+  }
+
   const [currentTasks, setCurrentTasks] = useState([])
   React.useEffect(() => {
     setCurrentTasks(tasks)
@@ -175,6 +182,11 @@ function App() {
     deleteTemplate(id)
   }
 
+
+  function editTemplateBtnHandler(id) {
+    editTemplate(id)
+  }
+
   return (
     <div>
       <div>
@@ -230,6 +242,7 @@ function App() {
           templates={templates}
           addTemplateBtnHandler={addTemplateBtnHandler}
           removeTemplateBtnHandler={removeTemplateBtnHandler}
+          editTemplateBtnHandler={editTemplateBtnHandler}
         />
       </div>
     </div>

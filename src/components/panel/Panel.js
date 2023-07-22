@@ -27,15 +27,18 @@ function Panel(props) {
       <div>
         <Stack direction="row" spacing={4} m="30px">
           <ToggleStateButton
+            id="toggle-state-btn"
             buttonName={currentState}
             toggleButtonView={() => toggleButtonView()}
             updateStateHandler={props.updateStateHandler}
           />
           <AddButton
+            id="add-task-btn"
             taskDetailsVisibilityHandler={props.taskDetailsVisibilityHandler}
             taskDetailsModeHandler={props.taskDetailsModeHandler}
           />
           <TemplateButton
+            id="template-btn"
             taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
           />
         </Stack>
