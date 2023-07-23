@@ -85,6 +85,14 @@ function TaskTemplate(props) {
                     e.persist();
                     setCurrentFilterValue(e.target.value);
                   }}
+                  onKeyDown={ e=> {
+                    if (e.key === "Enter") {
+                        setIsFocused(false);
+                        setTemplateEditingMode(false);
+                        setCurrentFilterValue("")
+                    }
+                  }
+                }
                 />
               </Tooltip>
             </GridItem>
