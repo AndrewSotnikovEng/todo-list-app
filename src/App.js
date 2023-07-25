@@ -92,9 +92,23 @@ function App() {
       setTemplates(tmpTemplates);
   }
 
-  function editTemplate(id) {
+  function editTemplate(id, newName) {
     var filterInput = document.getElementById("filter-template-input")
     
+    axios
+      .put(`http://localhost:3333/templates/${id}`, {
+        "id": id,
+        "name": newName
+      })
+
+      var tmpTemplates = templates;
+      tmpTemplates.map( template => {
+        if (template.id == id) {
+          template.name = newName
+        }
+      })
+
+      setTemplates(tmpTemplates)
     filterInput.focus();
     // filterInput.scrollIntoView();
   }
@@ -183,8 +197,8 @@ function App() {
   }
 
 
-  function editTemplateBtnHandler(id) {
-    editTemplate(id)
+  function editTemplateBtnHandler(id, newName) {
+    editTemplate(id, newName)
   }
 
   return (

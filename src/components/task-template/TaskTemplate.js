@@ -88,6 +88,9 @@ function TaskTemplate(props) {
                   onKeyDown={ e=> {
                     if (e.key === "Enter") {
                         setIsFocused(false);
+                        console.log(`Selected value: ${selectedTemplateValue}, 
+                          current filter value: ${currentFilterValue}`);
+                        props.editTemplateBtnHandler(selectedTemplateValue, currentFilterValue);
                         setTemplateEditingMode(false);
                         setCurrentFilterValue("")
                     }
@@ -122,7 +125,6 @@ function TaskTemplate(props) {
                       borderWidth={1}
                       borderColor={"black"}
                       onClick={() => {
-                        props.editTemplateBtnHandler(selectedTemplateValue);
                         setTemplateEditingMode(true);
                         setCurrentFilterValue(props.templates.filter(item => item.id == selectedTemplateValue)[0].name);
                         setTooltipInfo("Please rename value");
