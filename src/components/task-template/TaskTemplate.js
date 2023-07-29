@@ -19,9 +19,15 @@ function TaskTemplate(props) {
     const [ templateEditingMode, setTemplateEditingMode ] = useState(false)
     const [ isFocused, setIsFocused ] = useState(false)
     const [ toolTipInfo, setTooltipInfo ] = useState("")
+    const [createButtonVisiblitiy, setCreateButtonVisibility] = useState("hidden")
 
     const hendleSelectChange = (e) => {
       setSelectedTemplateValue(e.target.value);
+      if (e.target.value == "") {
+        setCreateButtonVisibility("hidden")
+      } else {
+        setCreateButtonVisibility("visible")
+      }
       // console.log(selectedTemplateValue);
     };
 
@@ -221,7 +227,16 @@ function TaskTemplate(props) {
         </div>
         <div className="modal-footer">
           <button
-            className="button"
+            className="button bottom-button"
+            style={{visibility: createButtonVisiblitiy}}
+            onClick={() => {
+              
+            }}
+          >
+            Create
+          </button>
+          <button
+            className="button bottom-button"
             onClick={() => {
               props.taskTemplateVisibilityHandler(false);
             }}
