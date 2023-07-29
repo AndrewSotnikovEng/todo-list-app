@@ -230,7 +230,7 @@ function TaskTemplate(props) {
             className="button bottom-button"
             style={{visibility: createButtonVisiblitiy}}
             onClick={() => {
-              
+              props.createTaskBtnHandler(filteredTemplates.filter( template => template.id == selectedTemplateValue)[0].name)
             }}
           >
             Create

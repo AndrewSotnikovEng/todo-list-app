@@ -201,6 +201,24 @@ function App() {
     editTemplate(id, newName)
   }
 
+  
+  //Add task based on the template
+  function createTaskBtnHandler(taskName) {
+    const newId = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1;
+    var task = {
+      id: newId,
+      name: taskName,
+      isTemplate: true,
+      state: "active",
+      description: "",
+      priority: "Low",
+    }
+    createTask(task)
+    var tmpTasks = tasks;
+    tmpTasks.push(task);
+    setTasks(tmpTasks);
+  }
+
   return (
     <div>
       <div>
@@ -257,6 +275,7 @@ function App() {
           addTemplateBtnHandler={addTemplateBtnHandler}
           removeTemplateBtnHandler={removeTemplateBtnHandler}
           editTemplateBtnHandler={editTemplateBtnHandler}
+          createTaskBtnHandler={createTaskBtnHandler}
         />
       </div>
     </div>
