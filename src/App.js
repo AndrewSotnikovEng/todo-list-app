@@ -20,6 +20,7 @@ function App() {
   const [taskDetailsState, setTaskDetailsState] = useState("")
   const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
   const [tasks, setTasks] = useState([])
+
   React.useEffect(() => {
     axios.get("http://localhost:3333/tasks").then((response) => {
       console.log("Response data: " + response.data);
@@ -127,10 +128,23 @@ function App() {
     setTaskDetailsState("");
   }
 
+  function markTaskDone(id) {
+    const task = tasks.filter(li => li.id == id)[0]
+    task.state = "done"
+    updateTask(task)
+  }
+
   function removeTaskHandler(id) {
     // const modifiedTasks = tasks.filter(li => li.id !== id)
     // setTasks(modifiedTasks)
     deleteTask(id);
+    const modifiedTasks = tasks.filter(li => li.id !== id)
+    setTasks(modifiedTasks)
+    updateStateHandler()
+  }
+
+  function markTaskDoneHandler(id) {
+    markTaskDone(id);
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
     updateStateHandler()
@@ -248,6 +262,7 @@ function App() {
                   priority={priority}
                   description={description}
                   removeTaskHandler={removeTaskHandler}
+                  markTaskDoneHandler={markTaskDoneHandler}
                 />
               </Box>
             );

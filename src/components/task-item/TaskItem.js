@@ -4,9 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button  } from "@chakra-ui/button"
 import { BiShare, BiChat, BiLike } from "react-icons/bi";
 import "react-icons/fa";
+import { MdOutlineDoneOutline } from "react-icons/md"
 import { Text, Card, CardBody, CardFooter, HStack, Flex } from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
-import { CloseButton } from '@chakra-ui/react'
+import { CloseButton, IconButton } from '@chakra-ui/react'
 
 
 function TaskItem(props) {
@@ -22,6 +23,7 @@ function TaskItem(props) {
             }
         }
     const [closeState, setCloseState] = useState(false);
+    const [doneState, setDoneState] = useState(false);
 
     return (
       <div>
@@ -33,7 +35,7 @@ function TaskItem(props) {
           borderColor="aqua"
           backgroundColor={backgroundColor}
           onClick={() => {
-            if (closeState == false) {
+            if (closeState == false && doneState == false) {
               props.taskDetailsVisibilityHandler(true);
               props.taskDetailsMode("Editing");
               props.taskDetailsIdHandler(props.id);
@@ -46,19 +48,19 @@ function TaskItem(props) {
         >
           <VStack align={"flex-end"}>
             <CloseButton
-            size="sm"
-            onClick={() => {
+              size="sm"
+              onClick={() => {
                 props.removeTaskHandler(props.id);
-            }}
-            onMouseOver={() => {
+              }}
+              onMouseOver={() => {
                 setCloseState(true);
-            }}
-            onMouseOut={() => {
+              }}
+              onMouseOut={() => {
                 setCloseState(false);
-            }}
+              }}
             />
           </VStack>
-          <CardBody ml="5px" pt={0}>
+          <CardBody minH="75px" maxH="75px" ml="5px" pt={0}>
             <Flex>
               <Text fontWeight="bold" width="260px">
                 {props.name}
@@ -78,7 +80,7 @@ function TaskItem(props) {
               },
             }}
           >
-            <HStack>
+            <HStack w="330px">
               <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
                 Like
               </Button>
@@ -88,6 +90,24 @@ function TaskItem(props) {
               <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
                 Share
               </Button>
+            </HStack>
+            <HStack h="15px" ml="305px">
+              <IconButton
+                variant="unstyled"
+                colorScheme="teal"
+                fontSize='15px'         
+                icon={<MdOutlineDoneOutline />}
+                onClick={ () => {
+                  props.markTaskDoneHandler(props.id);
+                }}
+                onMouseOver={() => {
+                  setDoneState(true);
+                }}
+                onMouseOut={() => {
+                  setDoneState(false);
+                }}
+              
+              />
             </HStack>
           </CardFooter>
         </Card>
