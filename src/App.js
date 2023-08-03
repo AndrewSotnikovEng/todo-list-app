@@ -144,6 +144,14 @@ function App() {
     }
   }
 
+  function showFinishedTasks(state) {
+    if(state) 
+    {  setCurrentTasks( tasks.filter( elem => elem.state == "done")) 
+  }
+    else 
+    { setCurrentTasks( tasks) }
+  }
+
   function taskDetailsOnChangeNotifier() {
     if (taskDetailsMode == "Editing") {
       const modifiedTasks = tasks.map((li) => {
@@ -228,6 +236,9 @@ function App() {
           taskDetailsVisibilityHandler={setShow}
           taskTemplateVisibilityHandler={setShowTaskTemplate}
           taskDetailsModeHandler={setTaskDetailsMode}
+          showFinishedTasks={showFinishedTasks}
+          tableState={tableState}
+          setTableState={setTableState}
         />
         <SimpleGrid minChildWidth="370px" spacing="10px">
           {currentTasks.map(({ id, name, state, priority, description }) => {
