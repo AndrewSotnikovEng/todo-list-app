@@ -31,7 +31,7 @@ function Panel(props) {
             id="toggle-state-btn"
             buttonName={currentState}
             toggleButtonView={() => toggleButtonView()}
-            updateStateHandler={props.updateStateHandler}
+            switchTableState={props.switchTableState}
           />
           <AddButton
             id="add-task-btn"

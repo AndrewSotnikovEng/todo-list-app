@@ -20,9 +20,9 @@ function FinishedTasksButton(props) {
               }
               props.showFinishedTasks(true);
               setIsFinishState(true)
-            } else {              //deactivating
-              setPreviousTableState("")              
+            } else {              //deactivating              
               props.setTableState(prevousTableState)
+              setPreviousTableState("")              
               props.showFinishedTasks(false);
               setIsFinishState(false)
             }

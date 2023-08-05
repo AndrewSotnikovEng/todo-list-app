@@ -32,6 +32,19 @@ function App() {
     });
   }, []);
 
+
+  // React.useEffect(() => {
+  //   if (tableState == "active") {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+  //   } else if ((tableState == "backlog")) {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+  //   }
+  // }, [tableState]);
+
+  React.useEffect(() => {
+    setTableState(tableState)
+  }, tasks);
+
   function updateTask(task) {
     axios
       .put(`http://localhost:3333/tasks/${task.id}`, {
@@ -133,10 +146,10 @@ function App() {
     deleteTask(id);
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
-    updateStateHandler()
+    switchTableState()
   }
 
-  function updateStateHandler() {
+  function switchTableState() {
     if (tableState == "active") {
       setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
     } else if ((tableState == "backlog")) {
@@ -149,20 +162,31 @@ function App() {
     {  setCurrentTasks( tasks.filter( elem => elem.state == "done")) 
   }
     else 
-    { setCurrentTasks( tasks) }
+    { 
+      if (tableState == "active") {
+        setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+      } else if ((tableState == "backlog")) {
+        setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+      }
+     }
   }
 
   function taskDetailsOnChangeNotifier() {
     if (taskDetailsMode == "Editing") {
-      const modifiedTasks = tasks.map((li) => {
+      var modifiedTasks = tasks
+      modifiedTasks.map( li => {
         if (li.id == taskDetailsId) {
           li.name = taskDetailsName;
           li.priority = taskDetailsPriority;
+          li.state = taskDetailsState;
           li.description = taskDetailsDescription;
           updateTask(li);
         }
-      });
-      resetDetailWindow();
+      }
+    );
+    
+      setTasks(modifiedTasks);
+      resetDetailWindow();      
     } else if (taskDetailsMode == "Adding") {              
       const newId = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1;
       setTaskDetailsId(newId);
@@ -232,7 +256,7 @@ function App() {
       <div>
         <Panel
           changeTableState={(state) => setTableState(state)}
-          updateStateHandler={updateStateHandler}
+          switchTableState={switchTableState}
           taskDetailsVisibilityHandler={setShow}
           taskTemplateVisibilityHandler={setShowTaskTemplate}
           taskDetailsModeHandler={setTaskDetailsMode}
