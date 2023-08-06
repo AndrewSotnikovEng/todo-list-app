@@ -171,6 +171,21 @@ function App() {
      }
   }
 
+  function markTaskAsDoneHandler(id) {
+    var completedTask = tasks.filter(task => task.id == id)[0]
+    completedTask.state = "done";
+
+    axios
+      .put(`http://localhost:3333/tasks/${completedTask.id}`, {
+        id: completedTask.id,
+        name: completedTask.name,
+        isTemplate: completedTask.isTemplate,
+        state: completedTask.state,
+        description: completedTask.description,
+        priority: completedTask.priority
+      })
+  }
+
   function taskDetailsOnChangeNotifier() {
     if (taskDetailsMode == "Editing") {
       var modifiedTasks = tasks
@@ -232,7 +247,6 @@ function App() {
   function editTemplateBtnHandler(id, newName) {
     editTemplate(id, newName)
   }
-
   
   //Add task based on the template
   function createTaskBtnHandler(taskName) {
@@ -277,6 +291,7 @@ function App() {
                   taskDetailsNameHandler={setTaskDetailsName}
                   taskDetailsPriorityHandler={setTaskDetailsPriority}
                   taskDetailsDescriptionHandler={setTaskDetailsDescription}
+                  markTaskAsDoneHandler={markTaskAsDoneHandler}
                   id={id}
                   name={name}
                   state={state}

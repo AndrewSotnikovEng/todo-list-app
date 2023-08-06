@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./TaskItem.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button  } from "@chakra-ui/button"
+import {Button, IconButton  } from "@chakra-ui/button"
 import { BiShare, BiChat, BiLike } from "react-icons/bi";
+import {MdDone } from "react-icons/md"
 import "react-icons/fa";
 import { Text, Card, CardBody, CardFooter, HStack, Flex } from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
-import { CloseButton } from '@chakra-ui/react'
+import { CloseButton, Spacer } from '@chakra-ui/react'
 
 
 function TaskItem(props) {
@@ -22,6 +23,7 @@ function TaskItem(props) {
             }
         }
     const [closeState, setCloseState] = useState(false);
+    const [doneState, setDoneState] = useState(false);
 
     return (
       <div>
@@ -33,7 +35,7 @@ function TaskItem(props) {
           borderColor="aqua"
           backgroundColor={backgroundColor}
           onClick={() => {
-            if (closeState == false) {
+            if (closeState == false && doneState == false) {
               props.taskDetailsVisibilityHandler(true);
               props.taskDetailsMode("Editing");
               props.taskDetailsIdHandler(props.id);
@@ -46,16 +48,16 @@ function TaskItem(props) {
         >
           <VStack align={"flex-end"}>
             <CloseButton
-            size="sm"
-            onClick={() => {
+              size="sm"
+              onClick={() => {
                 props.removeTaskHandler(props.id);
-            }}
-            onMouseOver={() => {
+              }}
+              onMouseOver={() => {
                 setCloseState(true);
-            }}
-            onMouseOut={() => {
+              }}
+              onMouseOut={() => {
                 setCloseState(false);
-            }}
+              }}
             />
           </VStack>
           <CardBody ml="5px" pt={0}>
@@ -89,6 +91,26 @@ function TaskItem(props) {
                 Share
               </Button>
             </HStack>
+            <Flex>
+              <Spacer w={"100%"}/>
+              <IconButton
+                // colorScheme=""
+                color={"black"}
+                h={"20px"}
+                maxW={"10px"}
+                aria-label="Search database"
+                icon={<MdDone />}
+                onClick={() => {
+                  props.markTaskAsDoneHandler(props.id);
+                }}
+                onMouseOver={() => {
+                  setDoneState(true);
+                }}
+                onMouseOut={() => {
+                  setDoneState(false);
+                }}
+              />
+            </Flex>
           </CardFooter>
         </Card>
       </div>
