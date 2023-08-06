@@ -10,7 +10,7 @@ function ToggleStateButton(props) {
     <Button onClick={
         () => {
             props.toggleButtonView()
-            props.updateStateHandler()
+            props.switchTableState()
         }  
     } 
     w={"120px"}

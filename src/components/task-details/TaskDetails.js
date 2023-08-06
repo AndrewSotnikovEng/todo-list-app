@@ -22,6 +22,7 @@ const TaskDetails = props => {
           <Select onChange={e => props.taskDetailsStateHandler(e.target.value)} size='sm' placeholder='Choose state' borderWidth={1} borderColor="black" mt={2} value={props.taskState}>
             <option value='active'>Active</option>
             <option value='backlog'>Backlog</option>
+            <option value='done'>Done</option>
           </Select>
           <Textarea onChange={e => props.taskDetailsDescriptionHandler(e.target.value)} size='sm' height={40} value={props.taskDescription} mt={2} borderWidth={1} borderColor="black"/>
 

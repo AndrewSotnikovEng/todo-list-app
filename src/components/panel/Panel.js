@@ -5,6 +5,7 @@ import { Stack } from '@chakra-ui/react'
 import ToggleStateButton from "../buttons/ToggleStateButton";
 import AddButton from "../buttons/AddButton";
 import TemplateButton from "../buttons/TemplateButton";
+import FinishedTasksButton from "../buttons/FinishedTasksButton";
 
 function Panel(props) {
   
@@ -30,7 +31,7 @@ function Panel(props) {
             id="toggle-state-btn"
             buttonName={currentState}
             toggleButtonView={() => toggleButtonView()}
-            updateStateHandler={props.updateStateHandler}
+            switchTableState={props.switchTableState}
           />
           <AddButton
             id="add-task-btn"
@@ -40,6 +41,13 @@ function Panel(props) {
           <TemplateButton
             id="template-btn"
             taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
+          />
+            <FinishedTasksButton
+            id="finished-tasks-btn"
+            tableState={props.tableState}
+            setTableState={props.setTableState}
+            showFinishedTasks={props.showFinishedTasks}
+            // taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
           />
         </Stack>
       </div>
