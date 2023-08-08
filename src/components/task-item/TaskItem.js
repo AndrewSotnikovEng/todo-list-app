@@ -7,7 +7,7 @@ import {MdDone } from "react-icons/md"
 import "react-icons/fa";
 import { Text, Card, CardBody, CardFooter, HStack, Flex } from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
-import { CloseButton, Spacer } from '@chakra-ui/react'
+import { CloseButton, Spacer, Box } from '@chakra-ui/react'
 
 
 function TaskItem(props) {
@@ -60,7 +60,7 @@ function TaskItem(props) {
               }}
             />
           </VStack>
-          <CardBody ml="5px" pt={0}>
+          <CardBody ml="5px" pt={0} height="65px" maxH="70px">
             <Flex>
               <Text fontWeight="bold" width="260px">
                 {props.name}
@@ -74,6 +74,7 @@ function TaskItem(props) {
             justify="space-between"
             flexWrap="wrap"
             pl={"5px"}
+            pb={"5px"}
             sx={{
               "& > button": {
                 minW: "110px",
@@ -91,13 +92,16 @@ function TaskItem(props) {
                 Share
               </Button>
             </HStack>
-            <Flex>
-              <Spacer w={"100%"}/>
+          </CardFooter>
+          <Flex w="100%">
+            <Spacer />
+            <Box w="35px">
               <IconButton
-                // colorScheme=""
                 color={"black"}
+                bg=""
                 h={"20px"}
-                maxW={"10px"}
+                w={"20px"}
+                m={0}
                 aria-label="Search database"
                 icon={<MdDone />}
                 onClick={() => {
@@ -110,8 +114,8 @@ function TaskItem(props) {
                   setDoneState(false);
                 }}
               />
-            </Flex>
-          </CardFooter>
+            </Box>
+          </Flex>
         </Card>
       </div>
     );
