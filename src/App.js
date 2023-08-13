@@ -10,7 +10,7 @@ import TaskTemplate from "./components/task-template/TaskTemplate";
 
 function App() {
 
-  const [tableState, setTableState] = useState("active");
+  const [tableState, setTableState] = useState("");
   const [show, setShow] = useState(false);
   const [showTaskTemplate, setShowTaskTemplate] = useState(false)
   const [taskDetailsId, setTaskDetailsId] = useState(0); 
@@ -30,16 +30,20 @@ function App() {
       console.log("Templates data: " + response.data);
       setTemplates(response.data);
     });
+
+    setTableState("active");
+    console.log(tableState);
   }, []);
 
-
-  // React.useEffect(() => {
-  //   if (tableState == "active") {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
-  //   } else if ((tableState == "backlog")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
-  //   }
-  // }, [tableState]);
+  React.useEffect(() => {
+    if (tableState == "active") {
+      setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+    } else if ((tableState == "backlog")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+    } else if ((tableState == "done")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+    }
+  }, [tableState]);
 
   React.useEffect(() => {
     setTableState(tableState)
@@ -157,6 +161,18 @@ function App() {
     }
   }
 
+  // function updateTableState() {
+  //   if (tableState == "active") {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+  //   } else if ((tableState == "backlog")) {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+  //   } else if ((tableState == "done")) {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+  //   }
+  // }
+
+
+
   function showFinishedTasks(state) {
     if(state) 
     {  setCurrentTasks( tasks.filter( elem => elem.state == "done")) 
@@ -219,6 +235,7 @@ function App() {
       setTasks(modifiedTasks);
       resetDetailWindow();
     }
+    // updateTableState();
   }
 
   function addTemplateBtnHandler(templateName) {
@@ -277,6 +294,7 @@ function App() {
           showFinishedTasks={showFinishedTasks}
           tableState={tableState}
           setTableState={setTableState}
+          // updateTableState={updateTableState}
         />
         <SimpleGrid minChildWidth="370px" spacing="10px">
           {currentTasks.map(({ id, name, state, priority, description }) => {
