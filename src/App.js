@@ -30,12 +30,12 @@ function App() {
       console.log("Templates data: " + response.data);
       setTemplates(response.data);
     });
-
     setTableState("active");
-    console.log(tableState);
+
   }, []);
 
   React.useEffect(() => {
+    console.log("Called table state: " + tableState);
     if (tableState == "active") {
       setCurrentTasks( tasks.filter( elem => elem.state == "active"))
     } else if ((tableState == "backlog")) {
@@ -45,9 +45,17 @@ function App() {
     }
   }, [tableState]);
 
+  // React.useEffect(() => {
+  //   setTableState(tableState)
+  // }, tasks);
+
   React.useEffect(() => {
-    setTableState(tableState)
-  }, tasks);
+    setCurrentTasks(tasks)
+  }, [tasks]);
+
+  const [currentTasks, setCurrentTasks] = useState([])
+  const [templates, setTemplates] = useState([])
+  
 
   function updateTask(task) {
     axios
@@ -130,13 +138,6 @@ function App() {
     // filterInput.scrollIntoView();
   }
 
-  const [currentTasks, setCurrentTasks] = useState([])
-  React.useEffect(() => {
-    setCurrentTasks(tasks)
-  }, [tasks]);
-
-  const [templates, setTemplates] = useState([])
-
   function resetDetailWindow() {
     setTaskDetailsName("...Please type here your title...");
     setTaskDetailsPriority("Low");
@@ -170,8 +171,6 @@ function App() {
   //     setCurrentTasks( tasks.filter( elem => elem.state == "done"))
   //   }
   // }
-
-
 
   function showFinishedTasks(state) {
     if(state) 
