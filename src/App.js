@@ -21,6 +21,8 @@ function App() {
   const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
   const [tasks, setTasks] = useState([])
   React.useEffect(() => {
+    setTableState("active");
+
     axios.get("http://localhost:3333/tasks").then((response) => {
       console.log("Response data: " + response.data);
       setTasks(response.data);
@@ -30,7 +32,6 @@ function App() {
       console.log("Templates data: " + response.data);
       setTemplates(response.data);
     });
-    setTableState("active");
 
   }, []);
 
@@ -43,14 +44,11 @@ function App() {
     } else if ((tableState == "done")) {
       setCurrentTasks( tasks.filter( elem => elem.state == "done"))
     }
+    console.log(currentTasks)
   }, [tableState]);
 
-  // React.useEffect(() => {
-  //   setTableState(tableState)
-  // }, tasks);
-
   React.useEffect(() => {
-    setCurrentTasks(tasks)
+    setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour
   }, [tasks]);
 
   const [currentTasks, setCurrentTasks] = useState([])
