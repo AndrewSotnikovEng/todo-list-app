@@ -160,15 +160,15 @@ function App() {
     }
   }
 
-  // function updateTableState() {
-  //   if (tableState == "active") {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
-  //   } else if ((tableState == "backlog")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
-  //   } else if ((tableState == "done")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "done"))
-  //   }
-  // }
+  function updateTableState() {
+    if (tableState == "active") {
+      setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+    } else if ((tableState == "backlog")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+    } else if ((tableState == "done")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+    }
+  }
 
   function showFinishedTasks(state) {
     if(state) 
@@ -232,7 +232,7 @@ function App() {
       setTasks(modifiedTasks);
       resetDetailWindow();
     }
-    // updateTableState();
+    updateTableState();
   }
 
   function addTemplateBtnHandler(templateName) {
