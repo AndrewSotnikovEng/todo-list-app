@@ -47,6 +47,7 @@ function Panel(props) {
             tableState={props.tableState}
             setTableState={props.setTableState}
             showFinishedTasks={props.showFinishedTasks}
+            // updateTableState={props.updateTableState}
             // taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
           />
         </Stack>

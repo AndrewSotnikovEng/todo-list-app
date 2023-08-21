@@ -18,14 +18,16 @@ function FinishedTasksButton(props) {
               if(props.tableState != "done") {
                 setPreviousTableState(props.tableState)
               }
-              props.showFinishedTasks(true);
+              props.setTableState("done")
+              // props.showFinishedTasks(true);
               setIsFinishState(true)
             } else {              //deactivating              
               props.setTableState(prevousTableState)
               setPreviousTableState("")              
-              props.showFinishedTasks(false);
+              // props.showFinishedTasks(false);
               setIsFinishState(false)
             }
+            // props.updateTableState();
         }
         } 
         w={"120px"}

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./TaskItem.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button  } from "@chakra-ui/button"
+import {Button, IconButton  } from "@chakra-ui/button"
 import { BiShare, BiChat, BiLike } from "react-icons/bi";
+import {MdDone } from "react-icons/md"
 import "react-icons/fa";
 import { MdOutlineDoneOutline } from "react-icons/md"
 import { Text, Card, CardBody, CardFooter, HStack, Flex } from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
-import { CloseButton, IconButton } from '@chakra-ui/react'
+import { CloseButton, Spacer, Box } from '@chakra-ui/react'
 
 
 function TaskItem(props) {
@@ -60,7 +61,7 @@ function TaskItem(props) {
               }}
             />
           </VStack>
-          <CardBody minH="75px" maxH="75px" ml="5px" pt={0}>
+          <CardBody ml="5px" pt={0} height="65px" maxH="70px">
             <Flex>
               <Text fontWeight="bold" width="260px">
                 {props.name}
@@ -74,6 +75,7 @@ function TaskItem(props) {
             justify="space-between"
             flexWrap="wrap"
             pl={"5px"}
+            pb={"5px"}
             sx={{
               "& > button": {
                 minW: "110px",
@@ -91,14 +93,20 @@ function TaskItem(props) {
                 Share
               </Button>
             </HStack>
-            <HStack h="15px" ml="305px">
+          </CardFooter>
+          <Flex w="100%">
+            <Spacer />
+            <Box w="35px">
               <IconButton
-                variant="unstyled"
-                colorScheme="teal"
-                fontSize='15px'         
-                icon={<MdOutlineDoneOutline />}
-                onClick={ () => {
-                  props.markTaskDoneHandler(props.id);
+                color={"black"}
+                bg=""
+                h={"20px"}
+                w={"20px"}
+                m={0}
+                aria-label="Search database"
+                icon={<MdDone />}
+                onClick={() => {
+                  props.markTaskAsDoneHandler(props.id);
                 }}
                 onMouseOver={() => {
                   setDoneState(true);
@@ -106,10 +114,9 @@ function TaskItem(props) {
                 onMouseOut={() => {
                   setDoneState(false);
                 }}
-              
               />
-            </HStack>
-          </CardFooter>
+            </Box>
+          </Flex>
         </Card>
       </div>
     );

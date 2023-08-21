@@ -10,7 +10,7 @@ import TaskTemplate from "./components/task-template/TaskTemplate";
 
 function App() {
 
-  const [tableState, setTableState] = useState("active");
+  const [tableState, setTableState] = useState("");
   const [show, setShow] = useState(false);
   const [showTaskTemplate, setShowTaskTemplate] = useState(false)
   const [taskDetailsId, setTaskDetailsId] = useState(0); 
@@ -22,6 +22,8 @@ function App() {
   const [tasks, setTasks] = useState([])
 
   React.useEffect(() => {
+    setTableState("active");
+
     axios.get("http://localhost:3333/tasks").then((response) => {
       console.log("Response data: " + response.data);
       setTasks(response.data);
@@ -31,20 +33,28 @@ function App() {
       console.log("Templates data: " + response.data);
       setTemplates(response.data);
     });
+
   }, []);
 
-
-  // React.useEffect(() => {
-  //   if (tableState == "active") {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
-  //   } else if ((tableState == "backlog")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
-  //   }
-  // }, [tableState]);
+  React.useEffect(() => {
+    console.log("Called table state: " + tableState);
+    if (tableState == "active") {
+      setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+    } else if ((tableState == "backlog")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+    } else if ((tableState == "done")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+    }
+    console.log(currentTasks)
+  }, [tableState]);
 
   React.useEffect(() => {
-    setTableState(tableState)
-  }, tasks);
+    setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour
+  }, [tasks]);
+
+  const [currentTasks, setCurrentTasks] = useState([])
+  const [templates, setTemplates] = useState([])
+  
 
   function updateTask(task) {
     axios
@@ -127,13 +137,6 @@ function App() {
     // filterInput.scrollIntoView();
   }
 
-  const [currentTasks, setCurrentTasks] = useState([])
-  React.useEffect(() => {
-    setCurrentTasks(tasks)
-  }, [tasks]);
-
-  const [templates, setTemplates] = useState([])
-
   function resetDetailWindow() {
     setTaskDetailsName("...Please type here your title...");
     setTaskDetailsPriority("Low");
@@ -172,6 +175,16 @@ function App() {
     }
   }
 
+  function updateTableState() {
+    if (tableState == "active") {
+      setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+    } else if ((tableState == "backlog")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+    } else if ((tableState == "done")) {
+      setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+    }
+  }
+
   function showFinishedTasks(state) {
     if(state) 
     {  setCurrentTasks( tasks.filter( elem => elem.state == "done")) 
@@ -184,6 +197,22 @@ function App() {
         setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
       }
      }
+  }
+
+  function markTaskAsDoneHandler(id) {
+    var completedTask = tasks.filter(task => task.id == id)[0]
+    completedTask.state = "done";
+
+    axios
+      .put(`http://localhost:3333/tasks/${completedTask.id}`, {
+        id: completedTask.id,
+        name: completedTask.name,
+        isTemplate: completedTask.isTemplate,
+        state: completedTask.state,
+        description: completedTask.description,
+        priority: completedTask.priority
+      })
+    updateTableState()
   }
 
   function taskDetailsOnChangeNotifier() {
@@ -219,6 +248,7 @@ function App() {
       setTasks(modifiedTasks);
       resetDetailWindow();
     }
+    updateTableState();
   }
 
   function addTemplateBtnHandler(templateName) {
@@ -247,7 +277,6 @@ function App() {
   function editTemplateBtnHandler(id, newName) {
     editTemplate(id, newName)
   }
-
   
   //Add task based on the template
   function createTaskBtnHandler(taskName) {
@@ -278,6 +307,7 @@ function App() {
           showFinishedTasks={showFinishedTasks}
           tableState={tableState}
           setTableState={setTableState}
+          // updateTableState={updateTableState}
         />
         <SimpleGrid minChildWidth="370px" spacing="10px">
           {currentTasks.map(({ id, name, state, priority, description }) => {
@@ -292,6 +322,7 @@ function App() {
                   taskDetailsNameHandler={setTaskDetailsName}
                   taskDetailsPriorityHandler={setTaskDetailsPriority}
                   taskDetailsDescriptionHandler={setTaskDetailsDescription}
+                  markTaskAsDoneHandler={markTaskAsDoneHandler}
                   id={id}
                   name={name}
                   state={state}
