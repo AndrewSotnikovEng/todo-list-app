@@ -7,12 +7,14 @@ import React, { useState, useEffect } from "react";
 import TaskDetails from "./components/task-details/TaskDetails";
 import { SimpleGrid, Box } from '@chakra-ui/react'
 import TaskTemplate from "./components/task-template/TaskTemplate";
+import TaskImporter from "./components/task-importer/TaskImporter";
 
 function App() {
 
   const [tableState, setTableState] = useState("");
   const [show, setShow] = useState(false);
   const [showTaskTemplate, setShowTaskTemplate] = useState(false)
+  const [showTaskImporter, setShowTaskImporter ] = useState(false)
   const [taskDetailsId, setTaskDetailsId] = useState(0); 
   const [taskDetailsName, setTaskDetailsName] = useState("Initial task");
   const [taskDetailsPriority, setTaskDetailsPriority] = useState("Low");
@@ -20,6 +22,11 @@ function App() {
   const [taskDetailsState, setTaskDetailsState] = useState("")
   const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
   const [tasks, setTasks] = useState([])
+  const [importedTasks, setImportedTasks] = useState([
+    "First exported task",
+    "Second exported task",
+    "Third exported tasks",
+  ]);
 
   React.useEffect(() => {
     setTableState("active");
@@ -295,6 +302,8 @@ function App() {
     setTasks(tmpTasks);
   }
 
+  
+
   return (
     <div>
       <div>
@@ -303,10 +312,12 @@ function App() {
           switchTableState={switchTableState}
           taskDetailsVisibilityHandler={setShow}
           taskTemplateVisibilityHandler={setShowTaskTemplate}
+          taskImporterVisibilityHandler={setShowTaskImporter}
           taskDetailsModeHandler={setTaskDetailsMode}
           showFinishedTasks={showFinishedTasks}
           tableState={tableState}
           setTableState={setTableState}
+          taskImporterUpdateHandler={setImportedTasks}
           // updateTableState={updateTableState}
         />
         <SimpleGrid minChildWidth="370px" spacing="10px">
@@ -358,6 +369,11 @@ function App() {
           removeTemplateBtnHandler={removeTemplateBtnHandler}
           editTemplateBtnHandler={editTemplateBtnHandler}
           createTaskBtnHandler={createTaskBtnHandler}
+        />
+        <TaskImporter
+          show={showTaskImporter}
+          taskImporterVisibilityHandler={setShowTaskImporter}
+          importedTasks={importedTasks}
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ import ToggleStateButton from "../buttons/ToggleStateButton";
 import AddButton from "../buttons/AddButton";
 import TemplateButton from "../buttons/TemplateButton";
 import FinishedTasksButton from "../buttons/FinishedTasksButton";
-import ExportTasksButton from "../buttons/ExportTasksButton";
+import ImportTasksButton from "../buttons/ImportTasksButton";
 
 function Panel(props) {
   
@@ -51,7 +51,10 @@ function Panel(props) {
             // updateTableState={props.updateTableState}
             // taskTemplateVisibilityHandler={props.taskTemplateVisibilityHandler}
           />
-          <ExportTasksButton />
+          <ImportTasksButton 
+            taskImporterVisibilityHandler={props.taskImporterVisibilityHandler}
+            taskImporterUpdateHandler={props.taskImporterUpdateHandler}
+          />
         </Stack>
       </div>
     );

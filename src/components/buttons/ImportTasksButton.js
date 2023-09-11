@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-icons/fa";
 
-function ExportTasksButton() {
+function ImportTasksButton(props) {
   function readFile(event) {
     const file = event.target.files[0];
     if (file) {
@@ -24,7 +24,10 @@ function ExportTasksButton() {
           return result
         };
         if (validateJSON(fileContents) == true) {
-          alert("JSON Loaded!")
+          const importedTasks = JSON.parse(fileContents) 
+          props.taskImporterUpdateHandler( importedTasks )
+          // alert("JSON Loaded!")
+          props.taskImporterVisibilityHandler(true)
         } else {
           alert ("Ivalid JSON!")
         }
@@ -39,4 +42,4 @@ function ExportTasksButton() {
   );
 }
 
-export default ExportTasksButton;
+export default ImportTasksButton;
