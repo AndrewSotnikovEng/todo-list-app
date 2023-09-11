@@ -9,8 +9,8 @@ const TaskImporter = props => {
 
   const taskNames = props.importedTasks.map((task, index) => (
     <div key={index} className="task-row">
-      <input type="checkbox" />
-      <label class="form-check-label" for="flexRadioDefault2" id="task-label">
+      <input type="checkbox" id={`checkbox-${index}`} />
+      <label htmlFor={`checkbox-${index}`} className="task-label" id={`task-label-${index}`}>
         {task.name}
       </label>
     </div>
