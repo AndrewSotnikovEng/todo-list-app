@@ -22,11 +22,7 @@ function App() {
   const [taskDetailsState, setTaskDetailsState] = useState("")
   const [taskDetailsMode, setTaskDetailsMode] = useState("Adding");
   const [tasks, setTasks] = useState([])
-  const [importedTasks, setImportedTasks] = useState([
-    "First exported task",
-    "Second exported task",
-    "Third exported tasks",
-  ]);
+  const [importedTasks, setImportedTasks] = useState([]);
 
   React.useEffect(() => {
     setTableState("active");
