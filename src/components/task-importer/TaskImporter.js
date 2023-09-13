@@ -7,9 +7,14 @@ const TaskImporter = props => {
   const [selectedTasks, setSelectedTasks] = useState([] );
 
   React.useEffect(() => {
-
+    var idCounter = 1
     const initialSelectedTasks =  props.importedTasks;
-    initialSelectedTasks.map((task) => (task.completed = false));
+    initialSelectedTasks.map((task) => {
+      task.completed = false;
+      task.id = idCounter;
+      idCounter++;
+    }
+    );
     setSelectedTasks(initialSelectedTasks);
 
   }, [props.show]);
@@ -60,6 +65,9 @@ const TaskImporter = props => {
             className="button"
             onClick={() => {
               props.taskImporterVisibilityHandler(false);
+              var onlySelected = selectedTasks.filter( task => task.completed == true)
+              props.createMultipleTask(onlySelected)
+              //add multiple tasks
             }}
           >
             Close

@@ -96,6 +96,16 @@ function App() {
       })
   }
 
+  //import tasks
+  function createMultipleTask(tasksToImport) {
+    var modifiedTasks = tasks;
+    tasksToImport.forEach( task => {
+      modifiedTasks.push(task);
+      createTask(task);
+    })
+    setTasks(modifiedTasks);
+  }
+
   function createTemplate(template) {
     axios
       .post(`http://localhost:3333/templates`, {
@@ -159,7 +169,8 @@ function App() {
     deleteTask(id);
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
-    switchTableState()
+    // switchTableState()
+    updateTableState()
   }
 
   function markTaskDoneHandler(id) {
@@ -370,6 +381,7 @@ function App() {
           show={showTaskImporter}
           taskImporterVisibilityHandler={setShowTaskImporter}
           importedTasks={importedTasks}
+          createMultipleTask={createMultipleTask}
         />
       </div>
     </div>
