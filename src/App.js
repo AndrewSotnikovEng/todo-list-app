@@ -54,7 +54,8 @@ function App() {
   // }, [tableState]);
 
   React.useEffect(() => {
-    setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour
+    // setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour
+    updateTableState();
   }, [tasks]);
 
   const [currentTasks, setCurrentTasks] = useState([])
@@ -80,7 +81,7 @@ function App() {
     axios
       .delete(`http://localhost:3333/tasks/${id}`)
       .then(() => {
-        alert("Task deleted!");
+        // alert("Task deleted!");
       });
 
       // setCurrentTasks(tasks);
@@ -167,15 +168,10 @@ function App() {
   }
 
   function removeTaskHandler(id) {
-    // const modifiedTasks = tasks.filter(li => li.id !== id)
-    // setTasks(modifiedTasks)
     deleteTask(id);
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
-    // switchTableState()
-    console.log(currentTasks)
-    updateTableState()
-    console.log(currentTasks)
+    // updateTableState()
   }
 
   function markTaskDoneHandler(id) {
@@ -210,14 +206,14 @@ function App() {
     {  setCurrentTasks( tasks.filter( elem => elem.state == "done")) 
   }
     else 
-    { 
+    {
       if (tableState == "active") {
         setCurrentTasks( tasks.filter( elem => elem.state == "active"))
       } else if ((tableState == "backlog")) {
         setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
       }
-     }
-  }
+    }
+      }
 
   function markTaskAsDoneHandler(id) {
     var completedTask = tasks.filter(task => task.id == id)[0]
@@ -331,7 +327,7 @@ function App() {
           tableState={tableState}
           setTableState={setTableState}
           taskImporterUpdateHandler={setImportedTasks}
-          // updateTableState={updateTableState}
+          updateTableState={updateTableState}
         />
         <SimpleGrid minChildWidth="370px" spacing="10px">
           {currentTasks.map(({ id, name, state, priority, description }) => {
