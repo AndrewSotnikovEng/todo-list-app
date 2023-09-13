@@ -39,17 +39,19 @@ function App() {
 
   }, []);
 
-  React.useEffect(() => {
-    console.log("Called table state: " + tableState);
-    if (tableState == "active") {
-      setCurrentTasks( tasks.filter( elem => elem.state == "active"))
-    } else if ((tableState == "backlog")) {
-      setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
-    } else if ((tableState == "done")) {
-      setCurrentTasks( tasks.filter( elem => elem.state == "done"))
-    }
-    console.log(currentTasks)
-  }, [tableState]);
+  // it's duplicated the function updateTableState()
+
+  // React.useEffect(() => {
+  //   console.log("Called table state: " + tableState);
+  //   if (tableState == "active") {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
+  //   } else if ((tableState == "backlog")) {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+  //   } else if ((tableState == "done")) {
+  //     setCurrentTasks( tasks.filter( elem => elem.state == "done"))
+  //   }
+  //   console.log(currentTasks)
+  // }, [tableState]);
 
   React.useEffect(() => {
     setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour
@@ -81,7 +83,7 @@ function App() {
         alert("Task deleted!");
       });
 
-      setCurrentTasks(tasks);
+      // setCurrentTasks(tasks);
   }
 
   function createTask(task) {
@@ -104,6 +106,7 @@ function App() {
       createTask(task);
     })
     setTasks(modifiedTasks);
+    updateTableState();
   }
 
   function createTemplate(template) {
@@ -170,7 +173,9 @@ function App() {
     const modifiedTasks = tasks.filter(li => li.id !== id)
     setTasks(modifiedTasks)
     // switchTableState()
+    console.log(currentTasks)
     updateTableState()
+    console.log(currentTasks)
   }
 
   function markTaskDoneHandler(id) {
@@ -194,6 +199,7 @@ function App() {
       setCurrentTasks( tasks.filter( elem => elem.state == "active"))
     } else if ((tableState == "backlog")) {
       setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
+      console.log(currentTasks);
     } else if ((tableState == "done")) {
       setCurrentTasks( tasks.filter( elem => elem.state == "done"))
     }

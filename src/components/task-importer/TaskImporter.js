@@ -66,6 +66,7 @@ const TaskImporter = props => {
             onClick={() => {
               props.taskImporterVisibilityHandler(false);
               var onlySelected = selectedTasks.filter( task => task.completed == true)
+              onlySelected.forEach( task => delete task.id)
               props.createMultipleTask(onlySelected)
               //add multiple tasks
             }}
