@@ -41,17 +41,9 @@ function App() {
 
   // it's duplicated the function updateTableState()
 
-  // React.useEffect(() => {
-  //   console.log("Called table state: " + tableState);
-  //   if (tableState == "active") {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "active"))
-  //   } else if ((tableState == "backlog")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "backlog"))
-  //   } else if ((tableState == "done")) {
-  //     setCurrentTasks( tasks.filter( elem => elem.state == "done"))
-  //   }
-  //   console.log(currentTasks)
-  // }, [tableState]);
+  React.useEffect(() => {
+    updateTableState();
+  }, [tableState]);
 
   React.useEffect(() => {
     // setCurrentTasks( tasks.filter( elem => elem.state == "active")) //default behaviour

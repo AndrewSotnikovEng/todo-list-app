@@ -53,7 +53,7 @@ function Panel(props) {
           />
           <ImportTasksButton 
             taskImporterVisibilityHandler={props.taskImporterVisibilityHandler}
-            taskImporterUpdateHandler={props.taskImporterUpdateHandler}
+            // taskImporterUpdateHandler={props.taskImporterUpdateHandler}
           />
         </Stack>
       </div>
