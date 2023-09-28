@@ -28,12 +28,12 @@ function App() {
     setTableState("active");
 
     axios.get("http://localhost:3333/tasks").then((response) => {
-      console.log("Response data: " + response.data);
+      // console.log("Response data: " + response.data);
       setTasks(response.data);
     });
 
     axios.get("http://localhost:3333/templates").then((response) => {
-      console.log("Templates data: " + response.data);
+      // console.log("Templates data: " + response.data);
       setTemplates(response.data);
     });
 

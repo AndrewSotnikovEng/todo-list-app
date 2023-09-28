@@ -34,6 +34,7 @@ function FinishedTasksButton(props) {
         leftIcon={<AiOutlineFileDone/>}
         colorScheme="teal"
         variant="outline"
+        id="finished-tasks-btn"
       >
         Finished
       </Button>
