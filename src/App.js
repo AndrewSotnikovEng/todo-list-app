@@ -324,7 +324,7 @@ function App() {
         <SimpleGrid minChildWidth="370px" spacing="10px">
           {currentTasks.map(({ id, name, state, priority, description }) => {
             return (
-              <Box>
+              <Box key={id}>
                 <TaskItem
                   taskDetailsVisibilityHandler={setShow}
                   isShown={show}
