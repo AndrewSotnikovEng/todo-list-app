@@ -15,6 +15,7 @@ function TemplateButton(props) {
         leftIcon={<HiTemplate />}
         colorScheme="teal"
         variant="outline"
+        id="template-tasks-btn"
       >
         Templates
       </Button>

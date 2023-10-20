@@ -48,8 +48,9 @@ function TaskTemplate(props) {
     }, [currentFilterValue]);
 
 
+    //do it needed here?
     useEffect( () =>  {
-      console.log(selectedTemplateValue);
+      // console.log(selectedTemplateValue);
     }, [selectedTemplateValue])
 
     if(!props.show) {
@@ -57,8 +58,8 @@ function TaskTemplate(props) {
     }
 
   return (
-    <div className="modal" id="modal-win">
-      <div className="modal-content">
+    <div className="modal">
+      <div className="modal-content-task-template" id="template-modal-win">
         <div className="modal-header">
           {/* <h4 className="modal-title"> {props.taskHeader} </h4> */}
         </div>

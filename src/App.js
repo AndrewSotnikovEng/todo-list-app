@@ -301,9 +301,8 @@ function App() {
     var tmpTasks = tasks;
     tmpTasks.push(task);
     setTasks(tmpTasks);
+    setShowTaskTemplate(false);
   }
-
-  
 
   return (
     <div>

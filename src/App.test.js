@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 
 test('Finish btn goes grey', () => {
@@ -56,3 +56,21 @@ test('Clicking finished button twice toggles state between "done" and initial st
   const stateTextAfterSecondClick = screen.getByText(/Current state is:/);
   expect(stateTextAfterSecondClick).toHaveTextContent(initialStateText);
 });
+
+
+
+test('Check template modal show-up', async () => {
+  render(<App />);
+
+  const templateButton = screen.getByRole('button', {
+    name: /templates/i,
+  });
+
+  fireEvent.click(templateButton);
+
+  await waitFor(() => {
+    const selectElement = screen.getByDisplayValue('Select template');
+    expect(selectElement).toBeInTheDocument();
+  });
+});
+
